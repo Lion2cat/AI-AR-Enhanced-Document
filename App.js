@@ -1,14 +1,41 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import 'react-native-gesture-handler';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import HomePage from './src/HomePage';
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomePage} />
+        <Stack.Screen name="Help" component={HelpScreen} />
+        <Stack.Screen name="Language" component={LanguageScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
+
+const HelpScreen = () => {
+  return (
+    <View style={styles.container}>
+      <Text>Help Screen</Text>
+    </View>
+  );
+};
+
+const LanguageScreen = () => {
+  return (
+    <View style={styles.container}>
+      <Text>Language Screen</Text>
+    </View>
+  );
+};
+
 
 const styles = StyleSheet.create({
   container: {
@@ -18,3 +45,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
