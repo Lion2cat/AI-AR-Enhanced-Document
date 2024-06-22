@@ -67,5 +67,6 @@ In `SetPage.js`, a button is added to toggle the theme.
 To run the project, use the following command:
 
 ```lua
+npm install react-native-paper @react-navigation/native @react-navigation/stack lottie-react-native lottie-ios@3.1.8
 expo start
 ```
