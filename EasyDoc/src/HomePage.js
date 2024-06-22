@@ -3,11 +3,16 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as Font from 'expo-font';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
+import { useThemeContext } from '../components/ThemeContext';
 
 const HomePage = () => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const navigation = useNavigation();
   const scale = useSharedValue(1);
+  const { isDarkTheme } = useThemeContext();
+
+  const themeTextStyle = isDarkTheme ? styles.darkThemeText : styles.lightThemeText;
+  const themeContainerStyle = isDarkTheme ? styles.darkContainer : styles.lightContainer;
 
   useEffect(() => {
     const loadFonts = async () => {
@@ -41,9 +46,9 @@ const HomePage = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>EasyDoc</Text>
-      <Text style={styles.subtitle}>Open your camera to enhance your DOC</Text>
+    <View style={[styles.container, themeContainerStyle]}>
+      <Text style={[styles.title, themeTextStyle]}>EasyDoc</Text>
+      <Text style={[styles.subtitle, themeTextStyle]}>Open your camera to enhance your DOC</Text>
 
       <Animated.View style={[styles.imageContainer, animatedStyle]}>
         <TouchableOpacity
@@ -71,6 +76,11 @@ const HomePage = () => {
       <View style={styles.iconButtonContainer}>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Chat')}>
           <Text style={styles.buttonText}>Chat</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.iconButtonContainer}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Settings')}>
+          <Text style={styles.buttonText}>Settings</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -122,6 +132,18 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 18,
     fontFamily: 'Outfit-SemiBold',
+  },
+  lightContainer: {
+    backgroundColor: '#d0d0c0',
+  },
+  darkContainer: {
+    backgroundColor: '#242c40',
+  },
+  lightThemeText: {
+    color: '#242c40',
+  },
+  darkThemeText: {
+    color: '#d0d0c0',
   },
 });
 
