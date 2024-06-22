@@ -68,5 +68,6 @@ To run the project, use the following command:
 
 ```lua
 npm install react-native-paper @react-navigation/native @react-navigation/stack lottie-react-native lottie-ios@3.1.8
+npm install webview@13.8.6
 expo start
 ```
