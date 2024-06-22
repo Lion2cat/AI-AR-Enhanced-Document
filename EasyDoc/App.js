@@ -5,6 +5,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomePage from './src/HomePage';
+import CameraPage from './src/CameraPage';
 
 const Stack = createStackNavigator();
 
@@ -15,6 +16,7 @@ export default function App() {
         <Stack.Screen name="Home" component={HomePage} />
         <Stack.Screen name="Help" component={HelpScreen} />
         <Stack.Screen name="Language" component={LanguageScreen} />
+        <Stack.Screen name="Camera" component={CameraPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

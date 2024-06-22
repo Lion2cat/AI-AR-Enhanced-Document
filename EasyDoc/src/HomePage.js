@@ -31,20 +31,22 @@ const HomePage = () => {
             <Text style={styles.subtitle}>Open your camera to Create your AR</Text>
             
             <View style={styles.imageContainer}>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Camera')}>
                 <Image
-                    source={require('../assets/favicon.png')}
+                    source={require('../assets/camera.png')}
                     style={styles.image}
                 />
-                <Text style={styles.icon}>📷</Text>
+                <Text style={styles.icon}></Text>
+                </TouchableOpacity>
             </View>
             <View style={styles.iconButtonContainer}>
-                <Text style={styles.icon}>🌐</Text>
+                <Text style={styles.icon}></Text>
                 <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Language')}>
                     <Text style={styles.buttonText}>Language</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.iconButtonContainer}>
-                <Text style={styles.icon}>❓</Text>
+                <Text style={styles.icon}></Text>
                 <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Help')}>
                     <Text style={styles.buttonText}>Help</Text>
                 </TouchableOpacity>
