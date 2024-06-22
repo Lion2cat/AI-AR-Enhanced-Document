@@ -51,6 +51,12 @@ const HomePage = () => {
                     <Text style={styles.buttonText}>Help</Text>
                 </TouchableOpacity>
             </View>
+            <View style={styles.iconButtonContainer}>
+                <Text style={styles.icon}></Text>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Chat')}>
+                    <Text style={styles.buttonText}>Chat</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 };

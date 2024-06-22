@@ -6,6 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomePage from './src/HomePage';
 import CameraPage from './src/CameraPage';
+import ChatPage from './src/ChatPage';
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,7 @@ export default function App() {
         <Stack.Screen name="Help" component={HelpScreen} />
         <Stack.Screen name="Language" component={LanguageScreen} />
         <Stack.Screen name="Camera" component={CameraPage} />
+        <Stack.Screen name="Chat" component={ChatPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
