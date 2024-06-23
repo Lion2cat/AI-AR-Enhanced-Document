@@ -6,6 +6,7 @@ import CameraPage from './src/CameraPage';
 import ChatPage from './src/ChatPage';
 import SetPage from './src/SetPage';
 import { ThemeProvider } from './components/ThemeContext';
+import { View, Text } from 'react-native';
 
 const Stack = createStackNavigator();
 
