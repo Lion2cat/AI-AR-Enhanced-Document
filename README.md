@@ -23,6 +23,7 @@ Before starting development, ensure your development environment is properly set
 - Node.js
 - npm or yarn
 - Expo CLI
+- JDK 17
 
 ### 3. Project Structure
 

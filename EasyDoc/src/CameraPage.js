@@ -1,71 +1,54 @@
-// src/CameraPage.js
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Button } from 'react-native';
-import { CameraView, useCameraPermissions } from 'expo-camera';
+import {
+  ViroARScene,
+  ViroARSceneNavigator,
+  ViroText,
+  ViroTrackingStateConstants,
+} from "@reactvision/react-viro";
+import React, { useState } from "react";
+import { StyleSheet } from "react-native";
 
-const CameraPage = ({ navigation }) => {
-  const [facing, setFacing] = useState('back');
-  const [permission, requestPermission] = useCameraPermissions();
+const HelloWorldSceneAR = () => {
+  const [text, setText] = useState("Initializing AR...");
 
-  if (!permission) {
-    // Camera permissions are still loading.
-    return <View />;
-  }
-
-  if (!permission.granted) {
-    // Camera permissions are not granted yet.
-    return (
-      <View style={styles.container}>
-        <Text style={{ textAlign: 'center' }}>We need your permission to show the camera</Text>
-        <Button onPress={requestPermission} title="grant permission" />
-      </View>
-    );
-  }
-
-  function toggleCameraFacing() {
-    setFacing(current => (current === 'back' ? 'front' : 'back'));
+  function onInitialized(state, reason) {
+    if (state === ViroTrackingStateConstants.TRACKING_NORMAL) {
+      setText("Hello World!");
+    } else if (state === ViroTrackingStateConstants.TRACKING_UNAVAILABLE) {
+      // Handle loss of tracking
+    }
   }
 
   return (
-    <View style={styles.container}>
-      <CameraView style={styles.camera} facing={facing}>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
-            <Text style={styles.text}>Flip Camera</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
-            <Text style={styles.text}>Back</Text>
-          </TouchableOpacity>
-        </View>
-      </CameraView>
-    </View>
+    <ViroARScene onTrackingUpdated={onInitialized}>
+      <ViroText
+        text={text}
+        scale={[0.5, 0.5, 0.5]}
+        position={[0, 0, -1]}
+        style={styles.helloWorldTextStyle}
+      />
+    </ViroARScene>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  camera: {
-    flex: 1,
-  },
-  buttonContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: 'transparent',
-    margin: 64,
-  },
-  button: {
-    flex: 1,
-    alignSelf: 'flex-end',
-    alignItems: 'center',
-  },
-  text: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'white',
+export default () => {
+  return (
+    <ViroARSceneNavigator
+      autofocus={true}
+      initialScene={{
+        scene: HelloWorldSceneAR,
+      }}
+      style={styles.f1}
+    />
+  );
+};
+
+var styles = StyleSheet.create({
+  f1: { flex: 1 },
+  helloWorldTextStyle: {
+    fontFamily: "Arial",
+    fontSize: 30,
+    color: "#ffffff",
+    textAlignVertical: "center",
+    textAlign: "center",
   },
 });
-
-export default CameraPage;
