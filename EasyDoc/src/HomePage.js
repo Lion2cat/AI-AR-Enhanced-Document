@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import * as Font from 'expo-font';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
 import { useThemeContext } from '../components/ThemeContext';
+import i18n from '../locales/i18n';
 
 const HomePage = () => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [locale, setLocaleState] = useState(i18n.locale);
   const navigation = useNavigation();
   const scale = useSharedValue(1);
   const { isDarkTheme } = useThemeContext();
+  const isFocused = useIsFocused();
 
   const themeTextStyle = isDarkTheme ? styles.darkThemeText : styles.lightThemeText;
   const themeContainerStyle = isDarkTheme ? styles.darkContainer : styles.lightContainer;
@@ -26,6 +29,12 @@ const HomePage = () => {
 
     loadFonts();
   }, []);
+
+  useEffect(() => {
+    if (isFocused) {
+      setLocaleState(i18n.locale);
+    }
+  }, [isFocused]);
 
   const handlePressIn = () => {
     scale.value = withSpring(0.95);
@@ -47,8 +56,8 @@ const HomePage = () => {
 
   return (
     <View style={[styles.container, themeContainerStyle]}>
-      <Text style={[styles.title, themeTextStyle]}>EasyDoc</Text>
-      <Text style={[styles.subtitle, themeTextStyle]}>Open your camera to enhance your DOC</Text>
+      <Text style={[styles.title, themeTextStyle]}>{i18n.t('title')}</Text>
+      <Text style={[styles.subtitle, themeTextStyle]}>{i18n.t('subtitle')}</Text>
 
       <Animated.View style={[styles.imageContainer, animatedStyle]}>
         <TouchableOpacity
@@ -65,22 +74,22 @@ const HomePage = () => {
 
       <View style={styles.iconButtonContainer}>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Language')}>
-          <Text style={styles.buttonText}>Language</Text>
+          <Text style={styles.buttonText}>{i18n.t('language')}</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.iconButtonContainer}>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Help')}>
-          <Text style={styles.buttonText}>Help</Text>
+          <Text style={styles.buttonText}>{i18n.t('help')}</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.iconButtonContainer}>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Chat')}>
-          <Text style={styles.buttonText}>Chat</Text>
+          <Text style={styles.buttonText}>{i18n.t('chat')}</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.iconButtonContainer}>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Settings')}>
-          <Text style={styles.buttonText}>Settings</Text>
+          <Text style={styles.buttonText}>{i18n.t('setting')}</Text>
         </TouchableOpacity>
       </View>
     </View>
