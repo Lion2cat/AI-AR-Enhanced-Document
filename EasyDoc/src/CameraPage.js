@@ -31,7 +31,8 @@ const HelloWorldSceneAR = () => {
     <ViroARScene onTrackingUpdated={onInitialized}>
       <ViroARImageMarker target={"logo"}>
           <Viro3DObject
-            scale={[0, 0, 0]}
+            scale={[0.1, 0.1, 0.1]}
+            position={[0.0, 0.0, 0.0]}
             source={require('./res/tesla/object_car.obj')}
             resources={[require('./res/tesla/object_car_material.mtl'),
                         ]}
@@ -40,6 +41,14 @@ const HelloWorldSceneAR = () => {
     </ViroARScene>
   );
 };
+
+ViroARTrackingTargets.createTargets({
+  "logo": {
+    source: require('./res/logo.png'),
+    orientation: "Up",
+    physicalWidth: 0.1 // real world width in meters
+  },
+});
 
 export default () => {
   return (
