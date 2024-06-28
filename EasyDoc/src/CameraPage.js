@@ -29,14 +29,18 @@ const HelloWorldSceneAR = () => {
 
   return (
     <ViroARScene onTrackingUpdated={onInitialized}>
+
+    <ViroLightingEnvironment source={require('./res/tesla/garage_1k.hdr')}/>
+
       <ViroARImageMarker target={"logo"}>
           <Viro3DObject
-            scale={[0.1, 0.1, 0.1]}
+            scale={[0.05, 0.05, 0.05]}
             position={[0.0, 0.0, 0.0]}
             source={require('./res/tesla/object_car.obj')}
             resources={[require('./res/tesla/object_car_material.mtl'),
                         ]}
-            type="OBJ" />
+            type="OBJ"
+            materials={"white"} />
       </ViroARImageMarker>
     </ViroARScene>
   );
@@ -48,6 +52,13 @@ ViroARTrackingTargets.createTargets({
     orientation: "Up",
     physicalWidth: 0.1 // real world width in meters
   },
+});
+
+ViroMaterials.createMaterials({
+  white: {
+     diffuseTexture: require('./res/tesla/object_car_main_Base_Color.png'),
+     specularTexture: require('./res/tesla/object_car_main_Base_Color.png'),
+   },
 });
 
 export default () => {
