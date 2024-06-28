@@ -7,5 +7,9 @@
     "chat": "聊天助手",
     "setting": "设置",
     "camera": "相机",
-    "select_language": "选择语言"
-}
+    "select_language": "选择语言",
+    "theme": "主题",
+    "theme_light": "浅色",
+    "theme_dark": "深色"
+  }
+  

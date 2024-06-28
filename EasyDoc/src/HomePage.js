@@ -73,23 +73,18 @@ const HomePage = () => {
       </Animated.View>
 
       <View style={styles.iconButtonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Language')}>
-          <Text style={styles.buttonText}>{i18n.t('language')}</Text>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Chat')}>
+          <Text style={styles.buttonText} numberOfLines={1} adjustsFontSizeToFit>{i18n.t('chat')}</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.iconButtonContainer}>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Help')}>
-          <Text style={styles.buttonText}>{i18n.t('help')}</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.iconButtonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Chat')}>
-          <Text style={styles.buttonText}>{i18n.t('chat')}</Text>
+          <Text style={styles.buttonText} numberOfLines={1} adjustsFontSizeToFit>{i18n.t('help')}</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.iconButtonContainer}>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Settings')}>
-          <Text style={styles.buttonText}>{i18n.t('setting')}</Text>
+          <Text style={styles.buttonText} numberOfLines={1} adjustsFontSizeToFit>{i18n.t('setting')}</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -136,11 +131,15 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginHorizontal: 10,
     alignItems: 'center',
+    justifyContent: 'center',
+    width: 150,
+    height: 50, 
   },
   buttonText: {
     color: '#FFFFFF',
     fontSize: 18,
     fontFamily: 'Outfit-SemiBold',
+    textAlign: 'center',
   },
   lightContainer: {
     backgroundColor: '#d0d0c0',

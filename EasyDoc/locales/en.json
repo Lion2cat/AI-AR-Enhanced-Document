@@ -1,11 +1,15 @@
 {
     "title": "EasyDoc",
-    "subtitle": "Open your camera to enhance your DOC",
+    "subtitle": "Open the camera to enhance the document",
     "home": "Home",
     "language": "Language",
     "help": "Help",
-    "chat": "Chat",
-    "setting": "Setting",
+    "chat": "Chat Assistant",
+    "setting": "Settings",
     "camera": "Camera",
-    "select_language": "Select Language"
-}
+    "select_language": "Select Language",
+    "theme": "Theme",
+    "theme_light": "Light",
+    "theme_dark": "Dark"
+  }
+  
