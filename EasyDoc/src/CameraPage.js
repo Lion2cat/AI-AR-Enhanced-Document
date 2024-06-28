@@ -1,8 +1,17 @@
 import {
   ViroARScene,
+  ViroMaterials,
+  ViroNode,
+  ViroAnimations,
+  Viro3DObject,
+  ViroLightingEnvironment,
+  ViroARImageMarker,
+  ViroARTrackingTargets,
+  ViroSphere,
+  ViroSpotLight,
+  ViroQuad,
   ViroARSceneNavigator,
-  ViroText,
-  ViroTrackingStateConstants,
+  ViroTrackingStateConstants
 } from "@reactvision/react-viro";
 import React, { useState } from "react";
 import { StyleSheet } from "react-native";
@@ -20,12 +29,14 @@ const HelloWorldSceneAR = () => {
 
   return (
     <ViroARScene onTrackingUpdated={onInitialized}>
-      <ViroText
-        text={text}
-        scale={[0.5, 0.5, 0.5]}
-        position={[0, 0, -1]}
-        style={styles.helloWorldTextStyle}
-      />
+      <ViroARImageMarker target={"logo"}>
+          <Viro3DObject
+            scale={[0, 0, 0]}
+            source={require('./res/tesla/object_car.obj')}
+            resources={[require('./res/tesla/object_car_material.mtl'),
+                        ]}
+            type="OBJ" />
+      </ViroARImageMarker>
     </ViroARScene>
   );
 };
