@@ -7,5 +7,9 @@
     "chat": "Assistant de chat",
     "setting": "Paramètres",
     "camera": "Caméra",
-    "select_language": "Choisir la langue"
-}
+    "select_language": "Choisir la langue",
+    "theme": "Thème",
+    "theme_light": "Clair",
+    "theme_dark": "Sombre"
+  }
+  
