@@ -40,7 +40,7 @@ const HelloWorldSceneAR = () => {
             resources={[require('./res/tesla/object_car_material.mtl'),
                         ]}
             type="OBJ"
-            materials={"white"} />
+             />
       </ViroARImageMarker>
     </ViroARScene>
   );
@@ -54,12 +54,12 @@ ViroARTrackingTargets.createTargets({
   },
 });
 
-ViroMaterials.createMaterials({
-  white: {
-     diffuseTexture: require('./res/tesla/object_car_main_Base_Color.png'),
-     specularTexture: require('./res/tesla/object_car_main_Base_Color.png'),
-   },
-});
+//ViroMaterials.createMaterials({
+//  white: {
+//     diffuseTexture: require('./res/tesla/object_car_main_Base_Color.png'),
+//     specularTexture: require('./res/tesla/object_car_main_Base_Color.png'),
+//   },
+//});
 
 export default () => {
   return (
