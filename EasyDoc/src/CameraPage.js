@@ -14,6 +14,7 @@ import * as Speech from 'expo-speech';
 
 const HelloWorldSceneAR = ({ setShowInfo }) => {
   const [text, setText] = useState("Initializing AR...");
+  const [scale, setScale] = useState([0.05, 0.05, 0.05]);
 
   function onInitialized(state, reason) {
     if (state === ViroTrackingStateConstants.TRACKING_NORMAL) {
@@ -25,6 +26,7 @@ const HelloWorldSceneAR = ({ setShowInfo }) => {
 
   function onModelClick() {
     setShowInfo(true); // 点击模型时显示说明文本窗口
+    setScale([0.06, 0.05, 0.05]); // 设置模型的新比例
   }
 
   return (
@@ -33,7 +35,7 @@ const HelloWorldSceneAR = ({ setShowInfo }) => {
 
       <ViroARImageMarker target={"logo"}>
         <Viro3DObject
-          scale={[0.05, 0.05, 0.05]}
+          scale={scale}
           position={[0.0, 0.0, 0.0]}
           source={require('./res/tesla/object_car.obj')}
           resources={[require('./res/tesla/object_car_material.mtl')]}
@@ -114,18 +116,20 @@ const ARCameraScreen = () => {
         style={styles.flex1}
       />
       {showInfo && (
-        <View style={styles.infoWindow}>
-          <TouchableOpacity onPress={handleCloseInfo} style={styles.closeButton}>
-            <Text style={styles.closeButtonText}>X</Text>
-          </TouchableOpacity>
-          <ScrollView contentContainerStyle={styles.scrollViewContent}>
-            <Text style={styles.infoText}>
-              {textToRead}
-            </Text>
-          </ScrollView>
-          <TouchableOpacity onPress={handleSpeak} style={styles.speakerButton}>
-            <Text style={styles.speakerButtonText}>🔊</Text>
-          </TouchableOpacity>
+        <View style={styles.infoContainer}>
+          <View style={styles.infoWindow}>
+            <TouchableOpacity onPress={handleCloseInfo} style={styles.closeButton}>
+              <Text style={styles.closeButtonText}>X</Text>
+            </TouchableOpacity>
+            <ScrollView contentContainerStyle={styles.scrollViewContent}>
+              <Text style={styles.infoText}>
+                {textToRead}
+              </Text>
+            </ScrollView>
+            <TouchableOpacity onPress={handleSpeak} style={styles.speakerButton}>
+              <Text style={styles.speakerButtonText}>🔊</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       )}
     </View>
@@ -136,16 +140,26 @@ const styles = StyleSheet.create({
   flex1: {
     flex: 1,
   },
-  infoWindow: {
+  infoContainer: {
     position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
+    bottom: 10,
+    left: 10,
+    right: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  infoWindow: {
     height: Dimensions.get('window').height / 3,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    padding: 10,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)', // 半透明黑色背景
+    borderRadius: 20,
+    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
+    elevation: 10,
   },
   closeButton: {
     alignSelf: 'flex-end',
@@ -164,12 +178,15 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   speakerButton: {
-    position: 'absolute',
-    bottom: 10,
-    right: 10,
+    marginTop: 10,
     padding: 10,
     backgroundColor: 'rgba(255, 255, 255, 0.3)',
     borderRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 5,
   },
   speakerButtonText: {
     fontSize: 24,
