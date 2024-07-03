@@ -11,8 +11,9 @@ import {
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Dimensions } from "react-native";
 import * as Speech from 'expo-speech';
+import i18n from '../locales/i18n';  // 导入国际化模块
 
-const HelloWorldSceneAR = ({ setShowInfo }) => {
+const HelloWorldSceneAR = ({ setShowInfo, setTextToRead }) => {
   const [text, setText] = useState("Initializing AR...");
   const [activeObject, setActiveObject] = useState(null); // 管理当前被点击的对象
 
@@ -27,6 +28,18 @@ const HelloWorldSceneAR = ({ setShowInfo }) => {
   function onModelClick(objectId) {
     setShowInfo(true); // 点击模型时显示说明文本窗口
     setActiveObject(objectId); // 设置当前被点击的对象
+
+    // 根据objectId设置对应的文本内容
+    const textMap = {
+      memory: i18n.t('MemoryText'),
+      DBMSM: i18n.t('DBMSMText'),
+      DBInstance_n: i18n.t('DBInstanceText'),
+      AppGM: i18n.t('AppGMText'),
+      Heap: i18n.t('HeapText'),
+      DBGM: i18n.t('DBGMText')
+    };
+
+    setTextToRead(textMap[objectId]);
   }
 
   return (
@@ -34,32 +47,110 @@ const HelloWorldSceneAR = ({ setShowInfo }) => {
       <ViroLightingEnvironment source={require('./res/tesla/garage_1k.hdr')} />
 
       <ViroARImageMarker target={"logo"}>
+        {/* Memory */}
         <Viro3DObject
-          scale={activeObject === "obj1" ? [0.06, 0.05, 0.05] : [0.05, 0.05, 0.05]}
-          position={[0.0, 0.0, 0.0]}
+          scale={activeObject === "memory" ? [0.06, 0.20, 0.05] : [0.05, 0.20, 0.05]}
+          position={[-0.2, 0.0, 0.0]}
+          rotation={[90,0,0]}
+          source={require('./res/tesla/object_car.obj')}
+          resources={[require('./res/tesla/object_car_material.mtl')]}
+          type="OBJ"
+          materials={"blue"}
+          onClick={() => onModelClick("memory")} // 添加点击事件处理程序
+        />
+        <Viro3DObject
+          scale={activeObject === "DBMSM" ? [0.06, 0.05, 0.05] : [0.05, 0.05, 0.05]}
+          position={[-0.2, 0.0, 0.20]}
+          rotation={[90,0,0]}
+          source={require('./res/tesla/object_car.obj')}
+          resources={[require('./res/tesla/object_car_material.mtl')]}
+          type="OBJ"
+          materials={"purple"}
+          onClick={() => onModelClick("DBMSM")}
+        />
+        
+        {/* Database Manager Shared Memory */}
+        <Viro3DObject
+          scale={activeObject === "DBMSM" ? [0.06, 0.11, 0.05] : [0.05, 0.11, 0.05]}
+          position={[0.0, 0.0, 0.04]}
+          rotation={[90,0,0]}
+          source={require('./res/tesla/object_car.obj')}
+          resources={[require('./res/tesla/object_car_material.mtl')]}
+          type="OBJ"
+          materials={"purple"}
+          onClick={() => onModelClick("DBMSM")} // 添加点击事件处理程序
+        />
+        <Viro3DObject
+          scale={activeObject === "DBInstance_n" ? [0.06, 0.05, 0.05] : [0.05, 0.05, 0.05]}
+          position={[0.0, 0.0, 0.14]}
+          rotation={[90,0,0]}
+          source={require('./res/tesla/object_car.obj')}
+          resources={[require('./res/tesla/object_car_material.mtl')]}
+          type="OBJ"
+          materials={"cyan"}
+          onClick={() => onModelClick("DBInstance_n")} // 添加点击事件处理程序
+        />
+        <Viro3DObject
+          scale={activeObject === "DBInstance_2" ? [0.06, 0.05, 0.05] : [0.05, 0.05, 0.05]}
+          position={[0.0, 0.0, 0.18]}
+          rotation={[90,0,0]}
           source={require('./res/tesla/object_car.obj')}
           resources={[require('./res/tesla/object_car_material.mtl')]}
           type="OBJ"
           materials={"red"}
-          onClick={() => onModelClick("obj1")}
+          onClick={() => onModelClick("DBInstance_2")} // 添加点击事件处理程序
         />
         <Viro3DObject
-          scale={activeObject === "obj2" ? [0.06, 0.05, 0.05] : [0.05, 0.05, 0.05]}
-          position={[0.0, 0.04, 0.0]}
+          scale={activeObject === "DBInstance_1" ? [0.06, 0.05, 0.05] : [0.05, 0.05, 0.05]}
+          position={[0.0, 0.0, 0.22]}
+          rotation={[90,0,0]}
           source={require('./res/tesla/object_car.obj')}
           resources={[require('./res/tesla/object_car_material.mtl')]}
           type="OBJ"
           materials={"green"}
-          onClick={() => onModelClick("obj2")} // 添加点击事件处理程序
+          onClick={() => onModelClick("DBInstance_1")} // 添加点击事件处理程序
         />
+
+        {/* DBInstance_1 */}
         <Viro3DObject
-          scale={activeObject === "obj3" ? [0.06, 0.05, 0.05] : [0.05, 0.05, 0.05]}
-          position={[0.0, 0.08, 0.0]}
+          scale={activeObject === "AppGM" ? [0.06, 0.11, 0.05] : [0.05, 0.11, 0.05]}
+          position={[0.2, 0.0, 0.04]}
+          rotation={[90,0,0]}
           source={require('./res/tesla/object_car.obj')}
           resources={[require('./res/tesla/object_car_material.mtl')]}
           type="OBJ"
-          materials={"yellow"}
-          onClick={() => onModelClick("obj3")} // 添加点击事件处理程序
+          materials={"green"}
+          onClick={() => onModelClick("AppGM")}
+        />
+        <Viro3DObject
+          scale={activeObject === "Heap" ? [0.06, 0.05, 0.05] : [0.05, 0.05, 0.05]}
+          position={[0.2, 0.0, 0.14]}
+          rotation={[90,0,0]}
+          source={require('./res/tesla/object_car.obj')}
+          resources={[require('./res/tesla/object_car_material.mtl')]}
+          type="OBJ"
+          materials={"grey"}
+          onClick={() => onModelClick("Heap")}
+        />
+        <Viro3DObject
+          scale={activeObject === "Heap" ? [0.06, 0.05, 0.05] : [0.05, 0.05, 0.05]}
+          position={[0.2, 0.0, 0.18]}
+          rotation={[90,0,0]}
+          source={require('./res/tesla/object_car.obj')}
+          resources={[require('./res/tesla/object_car_material.mtl')]}
+          type="OBJ"
+          materials={"blue"}
+          onClick={() => onModelClick("Heap")}
+        />
+        <Viro3DObject
+          scale={activeObject === "DBGM" ? [0.06, 0.05, 0.05] : [0.05, 0.05, 0.05]}
+          position={[0.2, 0.0, 0.22]}
+          rotation={[90,0,0]}
+          source={require('./res/tesla/object_car.obj')}
+          resources={[require('./res/tesla/object_car_material.mtl')]}
+          type="OBJ"
+          materials={"red"}
+          onClick={() => onModelClick("DBGM")}
         />
       </ViroARImageMarker>
     </ViroARScene>
@@ -87,13 +178,29 @@ ViroMaterials.createMaterials({
     diffuseTexture: require('./res/tesla/yellow.jpg'),
     specularTexture: require('./res/tesla/yellow.jpg'),
   },
+  cyan: {
+    diffuseTexture: require('./res/tesla/cyan.jpg'),
+    specularTexture: require('./res/tesla/cyan.jpg'),
+  },
+  blue: {
+    diffuseTexture: require('./res/tesla/blue.jpg'),
+    specularTexture: require('./res/tesla/blue.jpg'),
+  },
+  purple: {
+    diffuseTexture: require('./res/tesla/purple.jpg'),
+    specularTexture: require('./res/tesla/purple.jpg'),
+  },
+  grey: {
+    diffuseTexture: require('./res/tesla/grey.jpg'),
+    specularTexture: require('./res/tesla/grey.jpg'),
+  },
 });
 
 const ARCameraScreen = () => {
   const [showInfo, setShowInfo] = useState(false); // 状态变量控制说明文本的显示
   const [isSpeaking, setIsSpeaking] = useState(false); // 状态变量控制语音播放状态
   const [selectedVoice, setSelectedVoice] = useState(null); // 状态变量控制选择的语音
-  const textToRead = "This is a car model. It's very detailed and well-rendered. You can add more information here about the car model or anything relevant to the AR experience. This text is scrollable, so you can add as much content as you need.";
+  const [textToRead, setTextToRead] = useState(""); // 状态变量控制显示的文本内容
 
   useEffect(() => {
     const loadVoices = async () => {
@@ -138,7 +245,7 @@ const ARCameraScreen = () => {
       <ViroARSceneNavigator
         autofocus={true}
         initialScene={{
-          scene: (props) => <HelloWorldSceneAR setShowInfo={setShowInfo} {...props} />,
+          scene: (props) => <HelloWorldSceneAR setShowInfo={setShowInfo} setTextToRead={setTextToRead} {...props} />,
         }}
         style={styles.flex1}
       />

@@ -10,6 +10,12 @@
     "select_language": "Select Language",
     "theme": "Theme",
     "theme_light": "Light",
-    "theme_dark": "Dark"
+    "theme_dark": "Dark",
+    "DBMSMText": "This is the shared memory area for the entire database manager instance, used to manage activity information for all database connections. It is allocated when the database manager starts (db2start) and released when the database manager stops (db2stop). The size of this area is automatically controlled by DB2.",
+    "AppGMText": "Each database instance has its own global memory area, which includes multiple application heaps. An application heap is allocated for each application that connects to the database. The memory amount for each application can be limited by the 'applheapsz' parameter, and the total memory for all applications can be limited by the 'appl_memory' parameter. The diagram shows multiple application heaps, supporting multiple simultaneous connections, with the maximum number determined by the max_connections parameter.",
+    "DBInstanceText": "Each database instance has its own global memory area, specified by the database_memory parameter. By default, this parameter is set to automatic, allowing DB2 to adjust the memory size as needed. Database global memory is used for storing buffer pools, log buffers, utility heaps, package caches, catalog caches, and lock lists.",
+    "MemoryText": "Memory content here...",
+    "HeapText": "Heap content here...",
+    "DBGMText": "DBGM content here..."
   }
   
