@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: 150,
-    height: 50, 
+    height: 50,
   },
   buttonText: {
     color: '#FFFFFF',
