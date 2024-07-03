@@ -14,7 +14,7 @@ import * as Speech from 'expo-speech';
 
 const HelloWorldSceneAR = ({ setShowInfo }) => {
   const [text, setText] = useState("Initializing AR...");
-  const [scale, setScale] = useState([0.05, 0.05, 0.05]);
+  const [activeObject, setActiveObject] = useState(null); // 管理当前被点击的对象
 
   function onInitialized(state, reason) {
     if (state === ViroTrackingStateConstants.TRACKING_NORMAL) {
@@ -24,9 +24,9 @@ const HelloWorldSceneAR = ({ setShowInfo }) => {
     }
   }
 
-  function onModelClick() {
+  function onModelClick(objectId) {
     setShowInfo(true); // 点击模型时显示说明文本窗口
-    setScale([0.06, 0.05, 0.05]); // 设置模型的新比例
+    setActiveObject(objectId); // 设置当前被点击的对象
   }
 
   return (
@@ -35,12 +35,31 @@ const HelloWorldSceneAR = ({ setShowInfo }) => {
 
       <ViroARImageMarker target={"logo"}>
         <Viro3DObject
-          scale={scale}
+          scale={activeObject === "obj1" ? [0.06, 0.05, 0.05] : [0.05, 0.05, 0.05]}
           position={[0.0, 0.0, 0.0]}
           source={require('./res/tesla/object_car.obj')}
           resources={[require('./res/tesla/object_car_material.mtl')]}
           type="OBJ"
-          onClick={onModelClick} // 添加点击事件处理程序
+          materials={"red"}
+          onClick={() => onModelClick("obj1")}
+        />
+        <Viro3DObject
+          scale={activeObject === "obj2" ? [0.06, 0.05, 0.05] : [0.05, 0.05, 0.05]}
+          position={[0.0, 0.04, 0.0]}
+          source={require('./res/tesla/object_car.obj')}
+          resources={[require('./res/tesla/object_car_material.mtl')]}
+          type="OBJ"
+          materials={"green"}
+          onClick={() => onModelClick("obj2")} // 添加点击事件处理程序
+        />
+        <Viro3DObject
+          scale={activeObject === "obj3" ? [0.06, 0.05, 0.05] : [0.05, 0.05, 0.05]}
+          position={[0.0, 0.08, 0.0]}
+          source={require('./res/tesla/object_car.obj')}
+          resources={[require('./res/tesla/object_car_material.mtl')]}
+          type="OBJ"
+          materials={"yellow"}
+          onClick={() => onModelClick("obj3")} // 添加点击事件处理程序
         />
       </ViroARImageMarker>
     </ViroARScene>
@@ -52,13 +71,21 @@ ViroARTrackingTargets.createTargets({
     source: require('./res/logo.png'),
     orientation: "Up",
     physicalWidth: 0.1 // real world width in meters
-  },
+  }
 });
 
 ViroMaterials.createMaterials({
-  white: {
-    diffuseTexture: require('./res/tesla/object_car_main_Base_Color.png'),
-    specularTexture: require('./res/tesla/object_car_main_Base_Color.png'),
+  red: {
+    diffuseTexture: require('./res/tesla/red.jpg'),
+    specularTexture: require('./res/tesla/red.jpg'),
+  },
+  green: {
+    diffuseTexture: require('./res/tesla/green.jpg'),
+    specularTexture: require('./res/tesla/green.jpg'),
+  },
+  yellow: {
+    diffuseTexture: require('./res/tesla/yellow.jpg'),
+    specularTexture: require('./res/tesla/yellow.jpg'),
   },
 });
 
