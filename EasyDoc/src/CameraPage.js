@@ -49,107 +49,107 @@ const HelloWorldSceneAR = ({ setShowInfo, setTextToRead }) => {
       <ViroARImageMarker target={"logo"}>
         {/* Memory */}
         <Viro3DObject
-          scale={activeObject === "memory" ? [0.06, 0.20, 0.05] : [0.05, 0.20, 0.05]}
-          position={[-0.2, 0.0, 0.0]}
+          scale={activeObject === "memory" ? [0.06, 0.22, 0.05] : [0.05, 0.22, 0.05]}
+          position={[-0.2, 0.0, 0.018]}
           rotation={[90,0,0]}
-          source={require('./res/tesla/object_car.obj')}
-          resources={[require('./res/tesla/object_car_material.mtl')]}
+          source={require('./res/tesla/object_carobj.obj')}
+          resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
-          materials={"blue"}
+          materials={"cyan"}
           onClick={() => onModelClick("memory")} // 添加点击事件处理程序
         />
         <Viro3DObject
           scale={activeObject === "DBMSM" ? [0.06, 0.05, 0.05] : [0.05, 0.05, 0.05]}
-          position={[-0.2, 0.0, 0.20]}
+          position={[-0.2, 0.0, 0.11]}
           rotation={[90,0,0]}
-          source={require('./res/tesla/object_car.obj')}
-          resources={[require('./res/tesla/object_car_material.mtl')]}
+          source={require('./res/tesla/object_carobj.obj')}
+          resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
-          materials={"purple"}
+          materials={"blue"}
           onClick={() => onModelClick("DBMSM")}
         />
         
         {/* Database Manager Shared Memory */}
         <Viro3DObject
           scale={activeObject === "DBMSM" ? [0.06, 0.11, 0.05] : [0.05, 0.11, 0.05]}
-          position={[0.0, 0.0, 0.04]}
+          position={[0.0, 0.0, -0.0122]}
           rotation={[90,0,0]}
-          source={require('./res/tesla/object_car.obj')}
-          resources={[require('./res/tesla/object_car_material.mtl')]}
+          source={require('./res/tesla/object_carobj.obj')}
+          resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
-          materials={"purple"}
+          materials={"blue"}
           onClick={() => onModelClick("DBMSM")} // 添加点击事件处理程序
         />
         <Viro3DObject
           scale={activeObject === "DBInstance_n" ? [0.06, 0.05, 0.05] : [0.05, 0.05, 0.05]}
-          position={[0.0, 0.0, 0.14]}
+          position={[0.0, 0.0, 0.042]}
           rotation={[90,0,0]}
-          source={require('./res/tesla/object_car.obj')}
-          resources={[require('./res/tesla/object_car_material.mtl')]}
+          source={require('./res/tesla/object_carobj.obj')}
+          resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
-          materials={"cyan"}
+          materials={"purple"}
           onClick={() => onModelClick("DBInstance_n")} // 添加点击事件处理程序
         />
         <Viro3DObject
           scale={activeObject === "DBInstance_2" ? [0.06, 0.05, 0.05] : [0.05, 0.05, 0.05]}
-          position={[0.0, 0.0, 0.18]}
+          position={[0.0, 0.0, 0.076]}
           rotation={[90,0,0]}
-          source={require('./res/tesla/object_car.obj')}
-          resources={[require('./res/tesla/object_car_material.mtl')]}
+          source={require('./res/tesla/object_carobj.obj')}
+          resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
-          materials={"red"}
+          materials={"purple"}
           onClick={() => onModelClick("DBInstance_2")} // 添加点击事件处理程序
         />
         <Viro3DObject
           scale={activeObject === "DBInstance_1" ? [0.06, 0.05, 0.05] : [0.05, 0.05, 0.05]}
-          position={[0.0, 0.0, 0.22]}
+          position={[0.0, 0.0, 0.11]}
           rotation={[90,0,0]}
-          source={require('./res/tesla/object_car.obj')}
-          resources={[require('./res/tesla/object_car_material.mtl')]}
+          source={require('./res/tesla/object_carobj.obj')}
+          resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
-          materials={"green"}
+          materials={"purple"}
           onClick={() => onModelClick("DBInstance_1")} // 添加点击事件处理程序
         />
 
         {/* DBInstance_1 */}
         <Viro3DObject
           scale={activeObject === "AppGM" ? [0.06, 0.11, 0.05] : [0.05, 0.11, 0.05]}
-          position={[0.2, 0.0, 0.04]}
+          position={[0.2, 0.0, -0.0122]}
           rotation={[90,0,0]}
-          source={require('./res/tesla/object_car.obj')}
-          resources={[require('./res/tesla/object_car_material.mtl')]}
+          source={require('./res/tesla/object_carobj.obj')}
+          resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
-          materials={"green"}
+          materials={"purple"}
           onClick={() => onModelClick("AppGM")}
         />
         <Viro3DObject
           scale={activeObject === "Heap" ? [0.06, 0.05, 0.05] : [0.05, 0.05, 0.05]}
-          position={[0.2, 0.0, 0.14]}
+          position={[0.2, 0.0, 0.042]}
           rotation={[90,0,0]}
-          source={require('./res/tesla/object_car.obj')}
-          resources={[require('./res/tesla/object_car_material.mtl')]}
+          source={require('./res/tesla/object_carobj.obj')}
+          resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
-          materials={"grey"}
+          materials={"yellow"}
           onClick={() => onModelClick("Heap")}
         />
         <Viro3DObject
           scale={activeObject === "Heap" ? [0.06, 0.05, 0.05] : [0.05, 0.05, 0.05]}
-          position={[0.2, 0.0, 0.18]}
+          position={[0.2, 0.0, 0.076]}
           rotation={[90,0,0]}
-          source={require('./res/tesla/object_car.obj')}
-          resources={[require('./res/tesla/object_car_material.mtl')]}
+          source={require('./res/tesla/object_carobj.obj')}
+          resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
-          materials={"blue"}
+          materials={"yellow"}
           onClick={() => onModelClick("Heap")}
         />
         <Viro3DObject
           scale={activeObject === "DBGM" ? [0.06, 0.05, 0.05] : [0.05, 0.05, 0.05]}
-          position={[0.2, 0.0, 0.22]}
+          position={[0.2, 0.0, 0.11]}
           rotation={[90,0,0]}
-          source={require('./res/tesla/object_car.obj')}
-          resources={[require('./res/tesla/object_car_material.mtl')]}
+          source={require('./res/tesla/object_carobj.obj')}
+          resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
-          materials={"red"}
+          materials={"pink"}
           onClick={() => onModelClick("DBGM")}
         />
       </ViroARImageMarker>
@@ -166,33 +166,25 @@ ViroARTrackingTargets.createTargets({
 });
 
 ViroMaterials.createMaterials({
-  red: {
-    diffuseTexture: require('./res/tesla/red.jpg'),
-    specularTexture: require('./res/tesla/red.jpg'),
-  },
-  green: {
-    diffuseTexture: require('./res/tesla/green.jpg'),
-    specularTexture: require('./res/tesla/green.jpg'),
-  },
   yellow: {
-    diffuseTexture: require('./res/tesla/yellow.jpg'),
-    specularTexture: require('./res/tesla/yellow.jpg'),
+    diffuseTexture: require('./res/tesla/yellow.png'),
+    specularTexture: require('./res/tesla/yellow.png'),
   },
   cyan: {
-    diffuseTexture: require('./res/tesla/cyan.jpg'),
-    specularTexture: require('./res/tesla/cyan.jpg'),
+    diffuseTexture: require('./res/tesla/cyan.png'),
+    specularTexture: require('./res/tesla/cyan.png'),
+  },
+  pink: {
+    diffuseTexture: require('./res/tesla/pink.png'),
+    specularTexture: require('./res/tesla/pink.png'),
   },
   blue: {
-    diffuseTexture: require('./res/tesla/blue.jpg'),
-    specularTexture: require('./res/tesla/blue.jpg'),
+    diffuseTexture: require('./res/tesla/blue.png'),
+    specularTexture: require('./res/tesla/blue.png'),
   },
   purple: {
-    diffuseTexture: require('./res/tesla/purple.jpg'),
-    specularTexture: require('./res/tesla/purple.jpg'),
-  },
-  grey: {
-    diffuseTexture: require('./res/tesla/grey.jpg'),
-    specularTexture: require('./res/tesla/grey.jpg'),
+    diffuseTexture: require('./res/tesla/purple.png'),
+    specularTexture: require('./res/tesla/purple.png'),
   },
 });
 
