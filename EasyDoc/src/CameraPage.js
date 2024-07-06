@@ -11,7 +11,7 @@ import {
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Dimensions } from "react-native";
 import * as Speech from 'expo-speech';
-import i18n from '../locales/i18n';  // 导入国际化模块
+import i18n, { getCurrentLocale, addLocaleChangeListener } from '../locales/i18n';
 
 const HelloWorldSceneAR = ({ setShowInfo, setTextToRead }) => {
   const [text, setText] = useState("Initializing AR...");
@@ -34,6 +34,8 @@ const HelloWorldSceneAR = ({ setShowInfo, setTextToRead }) => {
       memory: i18n.t('MemoryText'),
       DBMSM: i18n.t('DBMSMText'),
       DBInstance_n: i18n.t('DBInstanceText'),
+      DBInstance_1: i18n.t('DBInstanceText'),
+      DBInstance_2: i18n.t('DBInstanceText'),
       AppGM: i18n.t('AppGMText'),
       Heap: i18n.t('HeapText'),
       DBGM: i18n.t('DBGMText')
@@ -55,6 +57,7 @@ const HelloWorldSceneAR = ({ setShowInfo, setTextToRead }) => {
           source={require('./res/tesla/object_carobj.obj')}
           resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
+          //materials={"cborange"}
           materials={"cyan"}
           onClick={() => onModelClick("memory")} // 添加点击事件处理程序
         />
@@ -65,6 +68,7 @@ const HelloWorldSceneAR = ({ setShowInfo, setTextToRead }) => {
           source={require('./res/tesla/object_carobj.obj')}
           resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
+          //materials={"cbskyblue"}
           materials={"blue"}
           onClick={() => onModelClick("DBMSM")}
         />
@@ -77,6 +81,7 @@ const HelloWorldSceneAR = ({ setShowInfo, setTextToRead }) => {
           source={require('./res/tesla/object_carobj.obj')}
           resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
+          //materials={"cbskyblue"}
           materials={"blue"}
           onClick={() => onModelClick("DBMSM")} // 添加点击事件处理程序
         />
@@ -87,6 +92,7 @@ const HelloWorldSceneAR = ({ setShowInfo, setTextToRead }) => {
           source={require('./res/tesla/object_carobj.obj')}
           resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
+          //materials={"cbgreen"}
           materials={"purple"}
           onClick={() => onModelClick("DBInstance_n")} // 添加点击事件处理程序
         />
@@ -97,6 +103,7 @@ const HelloWorldSceneAR = ({ setShowInfo, setTextToRead }) => {
           source={require('./res/tesla/object_carobj.obj')}
           resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
+          //materials={"cbgreen"}
           materials={"purple"}
           onClick={() => onModelClick("DBInstance_2")} // 添加点击事件处理程序
         />
@@ -107,6 +114,7 @@ const HelloWorldSceneAR = ({ setShowInfo, setTextToRead }) => {
           source={require('./res/tesla/object_carobj.obj')}
           resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
+          //materials={"cbgreen"}
           materials={"purple"}
           onClick={() => onModelClick("DBInstance_1")} // 添加点击事件处理程序
         />
@@ -119,6 +127,7 @@ const HelloWorldSceneAR = ({ setShowInfo, setTextToRead }) => {
           source={require('./res/tesla/object_carobj.obj')}
           resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
+          //materials={"cbgreen"}
           materials={"purple"}
           onClick={() => onModelClick("AppGM")}
         />
@@ -129,6 +138,7 @@ const HelloWorldSceneAR = ({ setShowInfo, setTextToRead }) => {
           source={require('./res/tesla/object_carobj.obj')}
           resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
+          //materials={"cbyellow"}
           materials={"yellow"}
           onClick={() => onModelClick("Heap")}
         />
@@ -139,6 +149,7 @@ const HelloWorldSceneAR = ({ setShowInfo, setTextToRead }) => {
           source={require('./res/tesla/object_carobj.obj')}
           resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
+          //materials={"cbyellow"}
           materials={"yellow"}
           onClick={() => onModelClick("Heap")}
         />
@@ -149,6 +160,7 @@ const HelloWorldSceneAR = ({ setShowInfo, setTextToRead }) => {
           source={require('./res/tesla/object_carobj.obj')}
           resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
+          //materials={"cbblue"}
           materials={"pink"}
           onClick={() => onModelClick("DBGM")}
         />
@@ -166,6 +178,7 @@ ViroARTrackingTargets.createTargets({
 });
 
 ViroMaterials.createMaterials({
+  // normal colour
   yellow: {
     diffuseTexture: require('./res/tesla/yellow.png'),
     specularTexture: require('./res/tesla/yellow.png'),
@@ -186,6 +199,28 @@ ViroMaterials.createMaterials({
     diffuseTexture: require('./res/tesla/purple.png'),
     specularTexture: require('./res/tesla/purple.png'),
   },
+
+  // colour blind friendly
+  cbblue: {
+    diffuseTexture: require('./res/tesla/colourblind_blue.png'),
+    specularTexture: require('./res/tesla/colourblind_blue.png'),
+  },
+  cbgreen: {
+    diffuseTexture: require('./res/tesla/colourblind_green.png'),
+    specularTexture: require('./res/tesla/colourblind_green.png'),
+  },
+  cborange: {
+    diffuseTexture: require('./res/tesla/colourblind_orange.png'),
+    specularTexture: require('./res/tesla/colourblind_orange.png'),
+  },
+  cbskyblue: {
+    diffuseTexture: require('./res/tesla/colourblind_skyblue.png'),
+    specularTexture: require('./res/tesla/colourblind_skyblue.png'),
+  },
+  cbyellow: {
+    diffuseTexture: require('./res/tesla/colourblind_yellow.png'),
+    specularTexture: require('./res/tesla/colourblind_yellow.png'),
+  },
 });
 
 const ARCameraScreen = () => {
@@ -195,14 +230,28 @@ const ARCameraScreen = () => {
   const [textToRead, setTextToRead] = useState(""); // 状态变量控制显示的文本内容
 
   useEffect(() => {
-    const loadVoices = async () => {
+    const loadVoices = async (languageCode) => {
       const voices = await Speech.getAvailableVoicesAsync();
-      // 找到一个更拟人的语音
-      const humanLikeVoice = voices.find(voice => voice.name.includes("en-US") && voice.quality === "Enhanced");
-      setSelectedVoice(humanLikeVoice);
+      let suitableVoice;
+      if (languageCode === 'zh') {
+        suitableVoice = voices.find(voice => voice.language === 'zh-TW' && voice.quality === "Enhanced");
+      } else if (languageCode === 'en') {
+        suitableVoice = voices.find(voice => voice.language === 'en-UK' && voice.quality === "Enhanced");
+      } else {
+        suitableVoice = voices.find(voice => voice.language === languageCode && voice.quality === "Enhanced");
+      }
+      setSelectedVoice(suitableVoice || voices[0]);
     };
-
-    loadVoices();
+  
+    loadVoices(getCurrentLocale());
+  
+    const unsubscribe = addLocaleChangeListener((locale) => {
+      loadVoices(locale);
+    });
+  
+    return () => {
+      unsubscribe(); // 组件卸载时移除监听器
+    };
   }, []);
 
   const handleSpeak = () => {
