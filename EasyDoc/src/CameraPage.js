@@ -46,9 +46,8 @@ const HelloWorldSceneAR = ({ setShowInfo, setTextToRead }) => {
 
   return (
     <ViroARScene onTrackingUpdated={onInitialized}>
-      <ViroLightingEnvironment source={require('./res/tesla/garage_1k.hdr')} />
 
-      <ViroARImageMarker target={"logo"}>
+      <ViroARImageMarker target={"target"}>
         {/* Memory */}
         <Viro3DObject
           scale={activeObject === "memory" ? [0.06, 0.22, 0.05] : [0.05, 0.22, 0.05]}
@@ -57,8 +56,8 @@ const HelloWorldSceneAR = ({ setShowInfo, setTextToRead }) => {
           source={require('./res/tesla/object_carobj.obj')}
           resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
-          //materials={"cborange"}
-          materials={"cyan"}
+          materials={"cborange"}
+          //materials={"cyan"}
           onClick={() => onModelClick("memory")} // 添加点击事件处理程序
         />
         <Viro3DObject
@@ -68,8 +67,8 @@ const HelloWorldSceneAR = ({ setShowInfo, setTextToRead }) => {
           source={require('./res/tesla/object_carobj.obj')}
           resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
-          //materials={"cbskyblue"}
-          materials={"blue"}
+          materials={"cbskyblue"}
+          //materials={"blue"}
           onClick={() => onModelClick("DBMSM")}
         />
         
@@ -81,8 +80,8 @@ const HelloWorldSceneAR = ({ setShowInfo, setTextToRead }) => {
           source={require('./res/tesla/object_carobj.obj')}
           resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
-          //materials={"cbskyblue"}
-          materials={"blue"}
+          materials={"cbskyblue"}
+          //materials={"blue"}
           onClick={() => onModelClick("DBMSM")} // 添加点击事件处理程序
         />
         <Viro3DObject
@@ -92,8 +91,8 @@ const HelloWorldSceneAR = ({ setShowInfo, setTextToRead }) => {
           source={require('./res/tesla/object_carobj.obj')}
           resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
-          //materials={"cbgreen"}
-          materials={"purple"}
+          materials={"cbgreen"}
+          //materials={"purple"}
           onClick={() => onModelClick("DBInstance_n")} // 添加点击事件处理程序
         />
         <Viro3DObject
@@ -103,8 +102,8 @@ const HelloWorldSceneAR = ({ setShowInfo, setTextToRead }) => {
           source={require('./res/tesla/object_carobj.obj')}
           resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
-          //materials={"cbgreen"}
-          materials={"purple"}
+          materials={"cbgreen"}
+          //materials={"purple"}
           onClick={() => onModelClick("DBInstance_2")} // 添加点击事件处理程序
         />
         <Viro3DObject
@@ -114,8 +113,8 @@ const HelloWorldSceneAR = ({ setShowInfo, setTextToRead }) => {
           source={require('./res/tesla/object_carobj.obj')}
           resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
-          //materials={"cbgreen"}
-          materials={"purple"}
+          materials={"cbgreen"}
+          //materials={"purple"}
           onClick={() => onModelClick("DBInstance_1")} // 添加点击事件处理程序
         />
 
@@ -127,8 +126,8 @@ const HelloWorldSceneAR = ({ setShowInfo, setTextToRead }) => {
           source={require('./res/tesla/object_carobj.obj')}
           resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
-          //materials={"cbgreen"}
-          materials={"purple"}
+          materials={"cbgreen"}
+          //materials={"purple"}
           onClick={() => onModelClick("AppGM")}
         />
         <Viro3DObject
@@ -138,8 +137,8 @@ const HelloWorldSceneAR = ({ setShowInfo, setTextToRead }) => {
           source={require('./res/tesla/object_carobj.obj')}
           resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
-          //materials={"cbyellow"}
-          materials={"yellow"}
+          materials={"cbyellow"}
+          //materials={"yellow"}
           onClick={() => onModelClick("Heap")}
         />
         <Viro3DObject
@@ -149,8 +148,8 @@ const HelloWorldSceneAR = ({ setShowInfo, setTextToRead }) => {
           source={require('./res/tesla/object_carobj.obj')}
           resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
-          //materials={"cbyellow"}
-          materials={"yellow"}
+          materials={"cbyellow"}
+          //materials={"yellow"}
           onClick={() => onModelClick("Heap")}
         />
         <Viro3DObject
@@ -160,8 +159,8 @@ const HelloWorldSceneAR = ({ setShowInfo, setTextToRead }) => {
           source={require('./res/tesla/object_carobj.obj')}
           resources={[require('./res/tesla/object_carobj.mtl')]}
           type="OBJ"
-          //materials={"cbblue"}
-          materials={"pink"}
+          materials={"cbblue"}
+          //materials={"pink"}
           onClick={() => onModelClick("DBGM")}
         />
       </ViroARImageMarker>
@@ -170,8 +169,8 @@ const HelloWorldSceneAR = ({ setShowInfo, setTextToRead }) => {
 };
 
 ViroARTrackingTargets.createTargets({
-  "logo": {
-    source: require('./res/logo.png'),
+  "target": {
+    source: require('./res/target.png'),
     orientation: "Up",
     physicalWidth: 0.1 // real world width in meters
   }

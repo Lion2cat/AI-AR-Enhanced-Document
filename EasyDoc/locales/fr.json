@@ -10,6 +10,9 @@
     "select_language": "Choisir la langue",
     "theme": "Thème",
     "theme_light": "Clair",
-    "theme_dark": "Sombre"
+    "theme_dark": "Sombre",
+    "color_blind_mode": "Mode daltonien",
+    "on": "On",
+    "off":"Off"
   }
   
