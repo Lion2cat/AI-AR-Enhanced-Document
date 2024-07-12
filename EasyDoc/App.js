@@ -2,7 +2,7 @@
   import { NavigationContainer } from '@react-navigation/native';
   import { createStackNavigator } from '@react-navigation/stack';
   import HomePage from './src/HomePage';
-  import CameraPage from './src/CameraPage';
+  import CameraPage from './src/ARCameraScreen';
   import ChatPage from './src/ChatPage';
   import SetPage from './src/SetPage';
   import { ThemeProvider } from './components/ThemeContext';
