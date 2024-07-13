@@ -52,14 +52,14 @@ const HelpPage = () => {
           />
           <Text style={[styles.subtitle2, themeTextStyle]}>{i18n.t('What question')}</Text>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={scrollToSection1}>
-              <Text style={styles.buttonText}>{i18n.t('About AR')}</Text>
+            <TouchableOpacity style={styles.button} onPress={scrollToSection1} >
+              <Text testID="aboutARButton" style={styles.buttonText}>{i18n.t('About AR')}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={scrollToSection2}>
-              <Text style={styles.buttonText}>{i18n.t('About chat assistant')}</Text>
+              <Text testID="aboutChatButton" style={styles.buttonText}>{i18n.t('About chat assistant')}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={scrollToSection3}>
-              <Text style={styles.buttonText}>{i18n.t('About language/theme')}</Text>
+              <Text testID="aboutLanguageButton" style={styles.buttonText}>{i18n.t('About language/theme')}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -86,7 +86,7 @@ const HelpPage = () => {
         </View>
       </ScrollView>
       <TouchableOpacity style={styles.floatingButton} onPress={scrollToTop}>
-        <Text style={styles.floatingButtonText}>↑</Text>
+        <Text testID="scrollToTopButton" style={styles.floatingButtonText}>↑</Text>
       </TouchableOpacity>
     </View>
   );
