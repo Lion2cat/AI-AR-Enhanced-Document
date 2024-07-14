@@ -1,3 +1,5 @@
+// ARCameraScreen.js
+
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Dimensions } from "react-native";
 import * as Speech from 'expo-speech';
@@ -11,7 +13,7 @@ const ARCameraScreen = () => {
   const [isSpeaking, setIsSpeaking] = useState(false); // 状态变量控制语音播放状态
   const [selectedVoice, setSelectedVoice] = useState(null); // 状态变量控制选择的语音
   const [activeObject, setActiveObject] = useState(null); // 管理当前被点击的对象
-  const textToRead = "This is a car model. It's very detailed and well-rendered. You can add more information here about the car model or anything relevant to the AR experience. This text is scrollable, so you can add as much content as you need.";
+  const [textToRead, setTextToRead] = useState("placeholder"); // 添加状态变量
 
   useEffect(() => {
     const loadVoices = async () => {
@@ -55,7 +57,7 @@ const ARCameraScreen = () => {
       <ViroARSceneNavigator
         autofocus={true}
         initialScene={{
-          scene: (props) => <HelloWorldSceneAR setShowInfo={setShowInfo} setActiveObject={setActiveObject} {...props} />,
+          scene: (props) => <HelloWorldSceneAR setShowInfo={setShowInfo} setActiveObject={setActiveObject} setTextToRead={setTextToRead} {...props} />,
         }}
         style={styles.flex1}
       />

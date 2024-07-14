@@ -1,3 +1,5 @@
+// HelloWorldSceneAR.js
+
 import React, { useState } from "react";
 import {
   ViroARScene,
@@ -10,7 +12,7 @@ import i18n from '../locales/i18n';
 import DetailSceneAR from "./DetailSceneAR";
 
 const HelloWorldSceneAR = (props) => {
-  const { sceneNavigator, setShowInfo, setActiveObject } = props;
+  const { sceneNavigator, setShowInfo, setActiveObject, setTextToRead } = props;
   const [activeObject, setActiveObjectLocal] = useState(null);
 
   function onModelClick(objectId) {
@@ -29,10 +31,11 @@ const HelloWorldSceneAR = (props) => {
     setActiveObjectLocal(objectId);
     setShowInfo(true);
     setActiveObject(objectId);
+    setTextToRead(textContent);
 
     sceneNavigator.push({
       scene: DetailSceneAR,
-      passProps: { objectId, textContent }
+      passProps: { objectId, textContent, sceneNavigator }
     });
   }
 
@@ -50,7 +53,6 @@ const HelloWorldSceneAR = (props) => {
           materials={"cube01"}
           onClick={() => onModelClick("DBMSM")}
         />
-
         {/* right */}
         <Viro3DObject
           scale={activeObject === "DBInstance_n" ? [0.05, 0.22, 0.05] : [0.02, 0.06, 0.05]}
