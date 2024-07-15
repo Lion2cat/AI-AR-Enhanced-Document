@@ -137,10 +137,26 @@ const DetailSceneAR = (props) => {
 };
 
 ViroMaterials.createMaterials({
-    cbblue: {
-        diffuseTexture: require('./res/tesla/colourblind_blue.png'),
-        specularTexture: require('./res/tesla/colourblind_blue.png'),
-    },
+  cbblue: {
+      diffuseTexture: require('./res/tesla/colourblind_blue.png'),
+      specularTexture: require('./res/tesla/colourblind_blue.png'),
+  },
+  cbskyblue: {
+      diffuseTexture: require('./res/tesla/colourblind_skyblue.png'),
+      specularTexture: require('./res/tesla/colourblind_skyblue.png'),
+  },
+  cbgreen: {
+    diffuseTexture: require('./res/tesla/colourblind_green.png'),
+    specularTexture: require('./res/tesla/colourblind_green.png'),
+  },
+  cborange: {
+    diffuseTexture: require('./res/tesla/colourblind_orange.png'),
+    specularTexture: require('./res/tesla/colourblind_orange.png'),
+  },
+  cbyellow: {
+    diffuseTexture: require('./res/tesla/colourblind_yellow.png'),
+    specularTexture: require('./res/tesla/colourblind_yellow.png'),
+  },
 });
 
 export default DetailSceneAR;

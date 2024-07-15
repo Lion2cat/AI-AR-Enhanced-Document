@@ -1,5 +1,3 @@
-// ARCameraScreen.js
-
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Dimensions } from "react-native";
 import * as Speech from 'expo-speech';

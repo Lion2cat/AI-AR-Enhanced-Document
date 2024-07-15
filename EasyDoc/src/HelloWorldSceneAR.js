@@ -1,5 +1,3 @@
-// HelloWorldSceneAR.js
-
 import React, { useState } from "react";
 import {
   ViroARScene,
@@ -46,10 +44,10 @@ const HelloWorldSceneAR = (props) => {
           scale= {[0.02, 0.05, 0.02]}
           position={[0, 0.0, -0.17]}
           rotation={[0, 0, 90]}
-          source={require('../assets/2D_model/1.obj')}
-          resources={[require('../assets/2D_model/1.mtl')]}
+          source={require('../assets/2D_model/cube01.obj')}
+          resources={[require('../assets/2D_model/cube01.mtl')]}
           type="OBJ"
-          materials={"cube01"}
+          materials={"dbmsm"}
           onClick={() => onModelClick("DBMSM")}
         />
         {/* right */}
@@ -57,30 +55,30 @@ const HelloWorldSceneAR = (props) => {
           scale={[0.02, 0.06, 0.05]}
           position={[0.1, 0, 0]}
           rotation={[0, 0, 90]}
-          source={require('../assets/2D_model/2.obj')}
-          resources={[require('../assets/2D_model/2.mtl')]}
+          source={require('../assets/2D_model/cube02.obj')}
+          resources={[require('../assets/2D_model/cube02.mtl')]}
           type="OBJ"
-          materials={"cbblue"}
+          materials={"dbr"}
           onClick={() => onModelClick("DBInstance_n")}
         />
         <Viro3DObject
           scale={[0.02, 0.07, 0.02]}
           position={[0.1, 0.01, -0.02]}
           rotation={[0, 0, 90]}
-          source={require('../assets/2D_model/1.obj')}
-          resources={[require('../assets/2D_model/1.mtl')]}
+          source={require('../assets/2D_model/cube01.obj')}
+          resources={[require('../assets/2D_model/cube01.mtl')]}
           type="OBJ"
-          materials={"cube01"}
+          materials={"appgm"}
           onClick={() => onModelClick("AppGM")}
         />
         <Viro3DObject
           scale={[0.02, 0.07, 0.02]}
           position={[0.1, 0.01, 0.05]}
           rotation={[0, 0, 90]}
-          source={require('../assets/2D_model/1.obj')}
-          resources={[require('../assets/2D_model/1.mtl')]}
+          source={require('../assets/2D_model/cube01.obj')}
+          resources={[require('../assets/2D_model/cube01.mtl')]}
           type="OBJ"
-          materials={"cube01"}
+          materials={"dbgm"}
           onClick={() => onModelClick("DBGM")}
         />
         {/* left */}
@@ -88,50 +86,50 @@ const HelloWorldSceneAR = (props) => {
           scale={[0.02, 0.06, 0.05]}
           position={[-0.1, 0, 0]}
           rotation={[0, 0, 90]}
-          source={require('../assets/2D_model/2.obj')}
-          resources={[require('../assets/2D_model/2.mtl')]}
+          source={require('../assets/2D_model/cube02.obj')}
+          resources={[require('../assets/2D_model/cube02.mtl')]}
           type="OBJ"
-          materials={"cbblue"}
+          materials={"dbl"}
           onClick={() => onModelClick("DBInstance_1")}
         />
         <Viro3DObject
           scale={[0.02, 0.07, 0.03]}
           position={[-0.1, 0.01, -0.005]}
           rotation={[0, 0, 90]}
-          source={require('../assets/2D_model/1.obj')}
-          resources={[require('../assets/2D_model/1.mtl')]}
+          source={require('../assets/2D_model/cube01.obj')}
+          resources={[require('../assets/2D_model/cube01.mtl')]}
           type="OBJ"
-          materials={"cube01"}
+          materials={"appgml"}
           onClick={() => onModelClick("AppGM")}
         />
         <Viro3DObject
           scale={[0.02, 0.06, 0.025]}
           position={[-0.13, 0.02, -0.005]}
           rotation={[0, 0, 90]}
-          source={require('../assets/2D_model/4.obj')}
-          resources={[require('../assets/2D_model/4.mtl')]}
+          source={require('../assets/2D_model/cube04.obj')}
+          resources={[require('../assets/2D_model/cube04.mtl')]}
           type="OBJ"
-          materials={"cborange"}
+          materials={"heap"}
           onClick={() => onModelClick("Heap")}
         />
         <Viro3DObject
           scale={[0.02, 0.06, 0.025]}
           position={[-0.065, 0.02, -0.005]}
           rotation={[0, 0, 90]}
-          source={require('../assets/2D_model/4.obj')}
-          resources={[require('../assets/2D_model/4.mtl')]}
+          source={require('../assets/2D_model/cube04.obj')}
+          resources={[require('../assets/2D_model/cube04.mtl')]}
           type="OBJ"
-          materials={"cborange"}
+          materials={"heap"}
           onClick={() => onModelClick("Heap")}
         />
         <Viro3DObject
-          scale={[0.02, 0.1, 0.01]}
+          scale={[0.03, 0.03, 0.035]}
           position={[-0.1, 0.01, 0.07]}
-          rotation={[0, 0, 90]}
-          source={require('../assets/2D_model/3.obj')}
-          resources={[require('../assets/2D_model/3.mtl')]}
+          rotation={[-90, 0, 90]}
+          source={require('../assets/2D_model/cube03.obj')}
+          resources={[require('../assets/2D_model/cube03.mtl')]}
           type="OBJ"
-          materials={"cbgreen"}
+          materials={"dbgml"}
           onClick={() => onModelClick("DBGM")}
         />
       </ViroARImageMarker>
@@ -148,34 +146,38 @@ ViroARTrackingTargets.createTargets({
 });
 
 ViroMaterials.createMaterials({
-  cbblue: {
-    diffuseTexture: require('./res/tesla/colourblind_blue.png'),
-    specularTexture: require('./res/tesla/colourblind_blue.png'),
-  },
-  cbgreen: {
-    diffuseTexture: require('./res/tesla/colourblind_green.png'),
-    specularTexture: require('./res/tesla/colourblind_green.png'),
-  },
-  cborange: {
-    diffuseTexture: require('./res/tesla/colourblind_orange.png'),
-    specularTexture: require('./res/tesla/colourblind_orange.png'),
-  },
-  cbskyblue: {
-    diffuseTexture: require('./res/tesla/colourblind_skyblue.png'),
-    specularTexture: require('./res/tesla/colourblind_skyblue.png'),
-  },
-  cbyellow: {
-    diffuseTexture: require('./res/tesla/colourblind_yellow.png'),
-    specularTexture: require('./res/tesla/colourblind_yellow.png'),
-  },
   dbmsm: {
     diffuseTexture: require('../assets/2D_model/colour/dbmsm.png'),
     specularTexture: require('../assets/2D_model/colour/dbmsm.png'),
   },
-  cube01: {
-    diffuseTexture: require('../assets/2D_model/colour/Cube04.png'),
-    specularTexture: require('../assets/2D_model/colour/Cube04.png'),
-  }
+  appgm: {
+    diffuseTexture: require('../assets/2D_model/colour/appgm.png'),
+    specularTexture: require('../assets/2D_model/colour/appgm.png'),
+  },
+  appgml: {
+    diffuseTexture: require('../assets/2D_model/colour/appgm_l.png'),
+    specularTexture: require('../assets/2D_model/colour/appgm_l.png'),
+  },
+  dbgm: {
+    diffuseTexture: require('../assets/2D_model/colour/dbgm.png'),
+    specularTexture: require('../assets/2D_model/colour/dbgm.png'),
+  },
+  dbgml: {
+    diffuseTexture: require('../assets/2D_model/colour/dbgm_l.png'),
+    specularTexture: require('../assets/2D_model/colour/dbgm_l.png'),
+  },
+  heap: {
+    diffuseTexture: require('../assets/2D_model/colour/heap.png'),
+    specularTexture: require('../assets/2D_model/colour/heap.png'),
+  },
+  dbr: {
+    diffuseTexture: require('../assets/2D_model/colour/dbr.png'),
+    specularTexture: require('../assets/2D_model/colour/dbr.png'),
+  },
+  dbl: {
+    diffuseTexture: require('../assets/2D_model/colour/dbl.png'),
+    specularTexture: require('../assets/2D_model/colour/dbl.png'),
+  },
 });
 
 export default HelloWorldSceneAR;
