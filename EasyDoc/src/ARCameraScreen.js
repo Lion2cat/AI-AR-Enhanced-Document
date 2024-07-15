@@ -12,13 +12,12 @@ const ARCameraScreen = () => {
   const [showInfo, setShowInfo] = useState(false); // 状态变量控制说明文本的显示
   const [isSpeaking, setIsSpeaking] = useState(false); // 状态变量控制语音播放状态
   const [selectedVoice, setSelectedVoice] = useState(null); // 状态变量控制选择的语音
-  const [activeObject, setActiveObject] = useState(null); // 管理当前被点击的对象
   const [textToRead, setTextToRead] = useState("placeholder"); // 添加状态变量
 
   useEffect(() => {
     const loadVoices = async () => {
       const voices = await Speech.getAvailableVoicesAsync();
-      const humanLikeVoice = voices.find(voice => voice.name.includes("en-US") && voice.quality === "Enhanced");
+      const humanLikeVoice = voices.find(voice => voice.name.includes("en-UK") && voice.quality === "Enhanced");
       setSelectedVoice(humanLikeVoice);
     };
 
@@ -57,7 +56,7 @@ const ARCameraScreen = () => {
       <ViroARSceneNavigator
         autofocus={true}
         initialScene={{
-          scene: (props) => <HelloWorldSceneAR setShowInfo={setShowInfo} setActiveObject={setActiveObject} setTextToRead={setTextToRead} {...props} />,
+          scene: (props) => <HelloWorldSceneAR setShowInfo={setShowInfo} setTextToRead={setTextToRead} {...props} />,
         }}
         style={styles.flex1}
       />

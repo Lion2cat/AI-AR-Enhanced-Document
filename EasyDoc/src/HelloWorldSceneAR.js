@@ -12,8 +12,7 @@ import i18n from '../locales/i18n';
 import DetailSceneAR from "./DetailSceneAR";
 
 const HelloWorldSceneAR = (props) => {
-  const { sceneNavigator, setShowInfo, setActiveObject, setTextToRead } = props;
-  const [activeObject, setActiveObjectLocal] = useState(null);
+  const { sceneNavigator, setShowInfo, setTextToRead } = props;
 
   function onModelClick(objectId) {
     const textMap = {
@@ -27,16 +26,16 @@ const HelloWorldSceneAR = (props) => {
       "DBGM": i18n.t('DBGMText')
     };
 
-    const textContent = textMap[objectId];
-    setActiveObjectLocal(objectId);
-    setShowInfo(true);
-    setActiveObject(objectId);
-    setTextToRead(textContent);
+    if (objectId === "DBMSM" || objectId === "DBInstance_1" || objectId === "DBInstance_n") {
+      const textContent = textMap[objectId];
+      setShowInfo(true);
+      setTextToRead(textContent);
 
-    sceneNavigator.push({
-      scene: DetailSceneAR,
-      passProps: { objectId, textContent, sceneNavigator }
-    });
+      sceneNavigator.push({
+        scene: DetailSceneAR,
+        passProps: { objectId, sceneNavigator, setShowInfo, setTextToRead }
+      });
+    } 
   }
 
   return (
@@ -44,7 +43,7 @@ const HelloWorldSceneAR = (props) => {
       <ViroARImageMarker target={"target"}>
         {/* top */}
         <Viro3DObject
-          scale={activeObject === "DBMSM" ? [0.05, 0.22, 0.05] : [0.02, 0.05, 0.02]}
+          scale= {[0.02, 0.05, 0.02]}
           position={[0, 0.0, -0.17]}
           rotation={[0, 0, 90]}
           source={require('../assets/2D_model/1.obj')}
@@ -55,7 +54,7 @@ const HelloWorldSceneAR = (props) => {
         />
         {/* right */}
         <Viro3DObject
-          scale={activeObject === "DBInstance_n" ? [0.05, 0.22, 0.05] : [0.02, 0.06, 0.05]}
+          scale={[0.02, 0.06, 0.05]}
           position={[0.1, 0, 0]}
           rotation={[0, 0, 90]}
           source={require('../assets/2D_model/2.obj')}
@@ -65,7 +64,7 @@ const HelloWorldSceneAR = (props) => {
           onClick={() => onModelClick("DBInstance_n")}
         />
         <Viro3DObject
-          scale={activeObject === "AppGM" ? [0.05, 0.22, 0.05] : [0.02, 0.07, 0.02]}
+          scale={[0.02, 0.07, 0.02]}
           position={[0.1, 0.01, -0.02]}
           rotation={[0, 0, 90]}
           source={require('../assets/2D_model/1.obj')}
@@ -75,7 +74,7 @@ const HelloWorldSceneAR = (props) => {
           onClick={() => onModelClick("AppGM")}
         />
         <Viro3DObject
-          scale={activeObject === "DBGM" ? [0.05, 0.22, 0.05] : [0.02, 0.07, 0.02]}
+          scale={[0.02, 0.07, 0.02]}
           position={[0.1, 0.01, 0.05]}
           rotation={[0, 0, 90]}
           source={require('../assets/2D_model/1.obj')}
@@ -86,7 +85,7 @@ const HelloWorldSceneAR = (props) => {
         />
         {/* left */}
         <Viro3DObject
-          scale={activeObject === "DBInstance_1" ? [0.05, 0.22, 0.05] : [0.02, 0.06, 0.05]}
+          scale={[0.02, 0.06, 0.05]}
           position={[-0.1, 0, 0]}
           rotation={[0, 0, 90]}
           source={require('../assets/2D_model/2.obj')}
@@ -96,7 +95,7 @@ const HelloWorldSceneAR = (props) => {
           onClick={() => onModelClick("DBInstance_1")}
         />
         <Viro3DObject
-          scale={activeObject === "AppGM" ? [0.05, 0.22, 0.05] : [0.02, 0.07, 0.03]}
+          scale={[0.02, 0.07, 0.03]}
           position={[-0.1, 0.01, -0.005]}
           rotation={[0, 0, 90]}
           source={require('../assets/2D_model/1.obj')}
@@ -106,7 +105,7 @@ const HelloWorldSceneAR = (props) => {
           onClick={() => onModelClick("AppGM")}
         />
         <Viro3DObject
-          scale={activeObject === "Heap" ? [0.05, 0.22, 0.05] : [0.02, 0.06, 0.025]}
+          scale={[0.02, 0.06, 0.025]}
           position={[-0.13, 0.02, -0.005]}
           rotation={[0, 0, 90]}
           source={require('../assets/2D_model/4.obj')}
@@ -116,7 +115,7 @@ const HelloWorldSceneAR = (props) => {
           onClick={() => onModelClick("Heap")}
         />
         <Viro3DObject
-          scale={activeObject === "Heap" ? [0.05, 0.22, 0.05] : [0.02, 0.06, 0.025]}
+          scale={[0.02, 0.06, 0.025]}
           position={[-0.065, 0.02, -0.005]}
           rotation={[0, 0, 90]}
           source={require('../assets/2D_model/4.obj')}
@@ -126,7 +125,7 @@ const HelloWorldSceneAR = (props) => {
           onClick={() => onModelClick("Heap")}
         />
         <Viro3DObject
-          scale={activeObject === "DBGM" ? [0.05, 0.22, 0.05] : [0.02, 0.1, 0.01]}
+          scale={[0.02, 0.1, 0.01]}
           position={[-0.1, 0.01, 0.07]}
           rotation={[0, 0, 90]}
           source={require('../assets/2D_model/3.obj')}
@@ -169,10 +168,14 @@ ViroMaterials.createMaterials({
     diffuseTexture: require('./res/tesla/colourblind_yellow.png'),
     specularTexture: require('./res/tesla/colourblind_yellow.png'),
   },
-  cube01: {
-    diffuseTexture: require('../assets/2D_model/colour/Cube01.png'),
-    specularTexture: require('../assets/2D_model/colour/Cube01.png'),
+  dbmsm: {
+    diffuseTexture: require('../assets/2D_model/colour/dbmsm.png'),
+    specularTexture: require('../assets/2D_model/colour/dbmsm.png'),
   },
+  cube01: {
+    diffuseTexture: require('../assets/2D_model/colour/Cube04.png'),
+    specularTexture: require('../assets/2D_model/colour/Cube04.png'),
+  }
 });
 
 export default HelloWorldSceneAR;

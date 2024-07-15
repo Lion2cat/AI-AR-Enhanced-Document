@@ -1,7 +1,6 @@
 # Apple ModelI/O MTL File: object_carobj.mtl
 
 newmtl 
-	map_Kd -color.png
 	Kd 1 1 1
 	Ka 0 0 0
 	Ks 0
