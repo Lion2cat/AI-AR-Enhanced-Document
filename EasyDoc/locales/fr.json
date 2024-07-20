@@ -13,6 +13,20 @@
     "theme_dark": "Sombre",
     "color_blind_mode": "Mode daltonien",
     "on": "On",
-    "off":"Off"
+    "off":"Off",
+    "Welcome to EasyDoc!": "Welcome to EasyDoc!",
+    "What question": "What kind of questions do you have?",
+    "About AR": "About AR",
+    "About chat assistant": "About chat assistant",
+    "About language/theme": "About language/theme",
+    "How to use AR": "How to use AR",
+    "Scan the documentation": "Click on the image to open the AR camera, and focus on the document, making sure the document fragment is in the center of the screen",
+    "Touch AR": "After the scan is successful, the screen will display relevant enhanced content, and you can interact with the content by tapping the screen",
+    "How to use Chat Assistant": "How to use documentation chat assistant",
+    "Click text box": "Click on the text box to enter your question",
+    "Do the best": "You can use our AI assistant as you would in a daily conversation and he will do his best to answer you",
+    "Language and Theme Settings": "Language and Theme Settings",
+    "Set language": "In settings, click the language dropdown to set the language",
+    "Set theme": "In settings, click the theme dropdown to set either Day Mode or Night Mode"
   }
   

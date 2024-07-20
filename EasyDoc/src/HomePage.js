@@ -50,13 +50,9 @@ const HomePage = () => {
     };
   });
 
-  if (!fontsLoaded) {
-    return null;
-  }
-
   return (
-    <View style={[styles.container, themeContainerStyle]}>
-      <Text style={[styles.title, themeTextStyle]}>{i18n.t('title')}</Text>
+    <View style={[styles.container, themeContainerStyle]} testID="container">
+      <Text style={[styles.title, themeTextStyle]} testID="textStyle">{i18n.t('title')}</Text>
       <Text style={[styles.subtitle, themeTextStyle]}>{i18n.t('subtitle')}</Text>
 
       <Animated.View style={[styles.imageContainer, animatedStyle]}>
@@ -64,6 +60,8 @@ const HomePage = () => {
           onPress={() => navigation.navigate('Camera')}
           onPressIn={handlePressIn}
           onPressOut={handlePressOut}
+          accessibilityRole="button"//测试相关
+          accessibilityLabel="CameraButton"//测试相关
         >
           <Image
             source={require('../assets/camera.png')}
@@ -73,17 +71,26 @@ const HomePage = () => {
       </Animated.View>
 
       <View style={styles.iconButtonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Chat')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Chat')}
+          accessibilityRole="button"//测试相关
+          accessibilityLabel="ChatButton"//测试相关
+        >
           <Text style={styles.buttonText} numberOfLines={1} adjustsFontSizeToFit>{i18n.t('chat')}</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.iconButtonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Help')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Help')}
+          accessibilityRole="button"//测试相关
+          accessibilityLabel="HelpButton"//测试相关
+        >
           <Text style={styles.buttonText} numberOfLines={1} adjustsFontSizeToFit>{i18n.t('help')}</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.iconButtonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Settings')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Settings')}
+          accessibilityRole="button"//测试相关
+          accessibilityLabel="SettingsButton"//测试相关
+        >
           <Text style={styles.buttonText} numberOfLines={1} adjustsFontSizeToFit>{i18n.t('setting')}</Text>
         </TouchableOpacity>
       </View>

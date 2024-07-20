@@ -32,6 +32,7 @@ const SetPage = () => {
           selectedValue={selectedLanguage}
           style={styles.picker}
           onValueChange={(itemValue) => changeLanguage(itemValue)}
+          testID="language-picker"//测试相关
         >
           <Picker.Item label="English" value="en" />
           <Picker.Item label="中文" value="zh" />
@@ -45,6 +46,7 @@ const SetPage = () => {
           selectedValue={selectedTheme}
           style={styles.picker}
           onValueChange={(itemValue) => changeTheme(itemValue)}
+          testID="theme-picker"//测试相关
         >
           <Picker.Item label={i18n.t('theme_light')} value="light" />
           <Picker.Item label={i18n.t('theme_dark')} value="dark" />
