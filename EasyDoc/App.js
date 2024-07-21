@@ -6,6 +6,7 @@
   import ChatPage from './src/ChatPage';
   import SetPage from './src/SetPage';
   import HelpPage from './src/HelpPage';
+  import DocumentPage from './src/DocumentPage';
   import { ThemeProvider } from './components/ThemeContext';
   import { View, Text } from 'react-native';
   import i18n, { addLocaleChangeListener } from './locales/i18n';
@@ -32,6 +33,7 @@
         <Stack.Navigator initialRouteName="Home">
           <Stack.Screen name="Home" component={HomePage} options={{ title: i18n.t('home') }} />
           <Stack.Screen name="Camera" component={CameraPage} options={{ title: i18n.t('camera') }} />
+          <Stack.Screen name="Document" component={DocumentPage} options={{ title: i18n.t('document') }} />
           <Stack.Screen name="Chat" component={ChatPage} options={{ title: i18n.t('chat') }} />
           <Stack.Screen name="Settings" component={SetPage} options={{ title: i18n.t('setting') }} />
           <Stack.Screen name="Help" component={HelpPage} options={{ title: i18n.t('help') }} />

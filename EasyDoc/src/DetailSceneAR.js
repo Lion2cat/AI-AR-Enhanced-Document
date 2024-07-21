@@ -44,85 +44,60 @@ const DetailSceneAR = (props) => {
     "DBMSM": [
       {
         id: "DBMSM",
-        source: require('./res/tesla/object_carobj.obj'),
-        resources: [require('./res/tesla/object_carobj.mtl')],
-        position: [0.0, 0.0594, 0],
-        rotation: [0, 0, 0],
-        defaultScale: [0.03, 0.06, 0.03],
-        activeScale: [0.04, 0.06, 0.03],
-        material: "cbskyblue",
-      },
-      {
-        id: "DBInstance_n",
-        source: require('./res/tesla/object_carobj.obj'),
-        resources: [require('./res/tesla/object_carobj.mtl')],
-        position: [0.0, 0.0286, 0],
-        rotation: [0, 0, 0],
-        defaultScale: [0.03, 0.03, 0.03],
-        activeScale: [0.04, 0.03, 0.03],
-        material: "cbgreen",
-      },
-      {
-        id: "DBInstance_2",
-        source: require('./res/tesla/object_carobj.obj'),
-        resources: [require('./res/tesla/object_carobj.mtl')],
-        position: [0.0, 0.0082, 0],
-        rotation: [0, 0, 0],
-        defaultScale: [0.03, 0.03, 0.03],
-        activeScale: [0.04, 0.03, 0.03],
-        material: "cbgreen",
-      },
-      {
-        id: "DBInstance_1",
-        source: require('./res/tesla/object_carobj.obj'),
-        resources: [require('./res/tesla/object_carobj.mtl')],
-        position: [0.0, -0.0122, 0],
-        rotation: [0, 0, 0],
-        defaultScale: [0.03, 0.03, 0.03],
-        activeScale: [0.04, 0.03, 0.03],
-        material: "cbgreen",
+        scale: [0.02, 0.05, 0.02],
+        position: [0, 0.08, -0.17],
+        rotation: [0, -90, 90],
+        source: require('../assets/2D_model/cube01.obj'),
+        resources: [require('../assets/2D_model/cube01.mtl')],
+        material:"dbmsm",
       },
     ],
     "DBInstance": [
       {
+        id: "DBInstance_1",
+        scale: [0.02, 0.06, 0.05],
+        position: [0, 0, -0.15],
+        rotation: [0, -90, 90],
+        source: require('../assets/2D_model/cube02.obj'),
+        resources: [require('../assets/2D_model/cube02.mtl')],
+        material: "dbl",
+      },
+      {
         id: "AppGM",
-        source: require('./res/tesla/object_carobj.obj'),
-        resources: [require('./res/tesla/object_carobj.mtl')],
-        position: [0.0, 0.0594, 0],
-        rotation: [0, 0, 0],
-        defaultScale: [0.03, 0.06, 0.03],
-        activeScale: [0.04, 0.06, 0.03],
-        material: "cbgreen",
+        scale: [0.02, 0.07, 0.03],
+        // [左右, 上下，前后]
+        position: [0, 0.005, -0.14],
+        rotation: [0, -90, 90],
+        source: require('../assets/2D_model/cube01.obj'),
+        resources: [require('../assets/2D_model/cube01.mtl')],
+        material: "appgml"
       },
       {
         id: "Heap",
-        source: require('./res/tesla/object_carobj.obj'),
-        resources: [require('./res/tesla/object_carobj.mtl')],
-        position: [0.0, 0.0286, 0],
-        rotation: [0, 0, 0],
-        defaultScale: [0.03, 0.03, 0.03],
-        activeScale: [0.04, 0.03, 0.03],
-        material: "cbyellow",
+        scale: [0.02, 0.06, 0.025],
+        position: [-0.03, 0, -0.13],
+        rotation: [0, -90, 90],
+        source: require('../assets/2D_model/cube04.obj'),
+        resources: [require('../assets/2D_model/cube04.mtl')],
+        material: "heap"
       },
       {
         id: "Heap",
-        source: require('./res/tesla/object_carobj.obj'),
-        resources: [require('./res/tesla/object_carobj.mtl')],
-        position: [0.0, 0.0082, 0],
-        rotation: [0, 0, 0],
-        defaultScale: [0.03, 0.03, 0.03],
-        activeScale: [0.04, 0.03, 0.03],
-        material: "cbyellow",
+        scale: [0.02, 0.06, 0.025],
+        position: [0.035, 0, -0.13],
+        rotation: [0, -90, 90],
+        source: require('../assets/2D_model/cube04.obj'),
+        resources: [require('../assets/2D_model/cube04.mtl')],
+        material: "heap"
       },
       {
         id: "DBGM",
-        source: require('./res/tesla/object_carobj.obj'),
-        resources: [require('./res/tesla/object_carobj.mtl')],
-        position: [0.0, -0.0122, 0],
-        rotation: [0, 0, 0],
-        defaultScale: [0.03, 0.03, 0.03],
-        activeScale: [0.04, 0.03, 0.03],
-        material: "cbblue",
+        scale: [0.03, 0.03, 0.035],
+        position: [0, -0.07, -0.14],
+        rotation: [-90, -90, 90],
+        source: require('../assets/2D_model/cube03.obj'),
+        resources: [require('../assets/2D_model/cube03.mtl')],
+        material: "dbgml",
       },
     ],
   };
@@ -138,7 +113,7 @@ const DetailSceneAR = (props) => {
           resources={obj.resources}
           position={obj.position}
           rotation={obj.rotation}
-          scale={activeObject === obj.id ? obj.activeScale : obj.defaultScale}
+          scale={obj.scale}
           type="OBJ"
           materials={obj.material}
           onClick={() => {
@@ -148,7 +123,7 @@ const DetailSceneAR = (props) => {
       ))}
       <ViroImage
         source={require('./res/back_button.png')}
-        position={[-0.1, 0.5, -1]}
+        position={[0.3, 0.25, -1]}
          scale={[0.1, 0.1, 0.1]}
          onClick={handleBack}
          style={{
@@ -165,25 +140,37 @@ const DetailSceneAR = (props) => {
 };
 
 ViroMaterials.createMaterials({
-  cbblue: {
-    diffuseTexture: require('./res/tesla/colourblind_blue.png'),
-    specularTexture: require('./res/tesla/colourblind_blue.png'),
+  dbmsm: {
+    diffuseTexture: require('../assets/2D_model/colour/dbmsm.png'),
+    specularTexture: require('../assets/2D_model/colour/dbmsm.png'),
   },
-  cbskyblue: {
-    diffuseTexture: require('./res/tesla/colourblind_skyblue.png'),
-    specularTexture: require('./res/tesla/colourblind_skyblue.png'),
+  appgm: {
+    diffuseTexture: require('../assets/2D_model/colour/appgm.png'),
+    specularTexture: require('../assets/2D_model/colour/appgm.png'),
   },
-  cbgreen: {
-    diffuseTexture: require('./res/tesla/colourblind_green.png'),
-    specularTexture: require('./res/tesla/colourblind_green.png'),
+  appgml: {
+    diffuseTexture: require('../assets/2D_model/colour/appgm_l.png'),
+    specularTexture: require('../assets/2D_model/colour/appgm_l.png'),
   },
-  cborange: {
-    diffuseTexture: require('./res/tesla/colourblind_orange.png'),
-    specularTexture: require('./res/tesla/colourblind_orange.png'),
+  dbgm: {
+    diffuseTexture: require('../assets/2D_model/colour/dbgm.png'),
+    specularTexture: require('../assets/2D_model/colour/dbgm.png'),
   },
-  cbyellow: {
-    diffuseTexture: require('./res/tesla/colourblind_yellow.png'),
-    specularTexture: require('./res/tesla/colourblind_yellow.png'),
+  dbgml: {
+    diffuseTexture: require('../assets/2D_model/colour/dbgm_l.png'),
+    specularTexture: require('../assets/2D_model/colour/dbgm_l.png'),
+  },
+  heap: {
+    diffuseTexture: require('../assets/2D_model/colour/heap.png'),
+    specularTexture: require('../assets/2D_model/colour/heap.png'),
+  },
+  dbr: {
+    diffuseTexture: require('../assets/2D_model/colour/dbr.png'),
+    specularTexture: require('../assets/2D_model/colour/dbr.png'),
+  },
+  dbl: {
+    diffuseTexture: require('../assets/2D_model/colour/dbl.png'),
+    specularTexture: require('../assets/2D_model/colour/dbl.png'),
   },
 });
 

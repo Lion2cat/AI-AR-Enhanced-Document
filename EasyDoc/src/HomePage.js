@@ -71,6 +71,13 @@ const HomePage = () => {
       </Animated.View>
 
       <View style={styles.iconButtonContainer}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Document')}
+        >
+          <Text style={styles.buttonText} numberOfLines={1} adjustsFontSizeToFit>{i18n.t('document')}</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.iconButtonContainer}>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Chat')}
           accessibilityRole="button"//测试相关
           accessibilityLabel="ChatButton"//测试相关
