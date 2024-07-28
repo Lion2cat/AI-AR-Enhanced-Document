@@ -26,7 +26,21 @@ const WebViewComponent = () => {
   useEffect(() => {
     const loadVoices = async () => {
       const voices = await Speech.getAvailableVoicesAsync();
-      const humanLikeVoice = voices.find(voice => voice.name.includes("en-UK") && voice.quality === "Enhanced");
+      let humanLikeVoice;
+      switch (i18n.locale) {
+        case 'en':
+          humanLikeVoice = voices.find(voice => voice.name.includes("en-UK") && voice.quality === "Enhanced");
+          break;
+        case 'zh':
+          humanLikeVoice = voices.find(voice => voice.name.includes("zh-TW") && voice.quality === "Enhanced");
+          break;
+        case 'fr':
+          humanLikeVoice = voices.find(voice => voice.name.includes("fr-FR") && voice.quality === "Enhanced");
+          break;
+        default:
+          humanLikeVoice = voices.find(voice => voice.quality === "Enhanced");
+          break;
+      }
       setSelectedVoice(humanLikeVoice);
     };
 

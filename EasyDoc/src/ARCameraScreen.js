@@ -5,6 +5,7 @@ import {
   ViroARSceneNavigator,
 } from "@reactvision/react-viro";
 import HelloWorldSceneAR from "./HelloWorldSceneAR";
+import i18n from "../locales/i18n";
 
 const ARCameraScreen = () => {
   const [showInfo, setShowInfo] = useState(false); // 状态变量控制说明文本的显示
@@ -15,7 +16,21 @@ const ARCameraScreen = () => {
   useEffect(() => {
     const loadVoices = async () => {
       const voices = await Speech.getAvailableVoicesAsync();
-      const humanLikeVoice = voices.find(voice => voice.name.includes("en-UK") && voice.quality === "Enhanced");
+      let humanLikeVoice;
+      switch (i18n.locale) {
+        case 'en':
+          humanLikeVoice = voices.find(voice => voice.name.includes("en-UK") && voice.quality === "Enhanced");
+          break;
+        case 'zh':
+          humanLikeVoice = voices.find(voice => voice.name.includes("zh-TW") && voice.quality === "Enhanced");
+          break;
+        case 'fr':
+          humanLikeVoice = voices.find(voice => voice.name.includes("fr-FR") && voice.quality === "Enhanced");
+          break;
+        default:
+          humanLikeVoice = voices.find(voice => voice.quality === "Enhanced");
+          break;
+      }
       setSelectedVoice(humanLikeVoice);
     };
 
