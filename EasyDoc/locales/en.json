@@ -34,6 +34,9 @@
     "Do the best": "You can use our AI assistant as you would in a daily conversation and he will do his best to answer you",
     "Language and Theme Settings": "Language and Theme Settings",
     "Set language": "In settings, click the language dropdown to set the language",
-    "Set theme": "In settings, click the theme dropdown to set either Day Mode or Night Mode"
+    "Set theme": "In settings, click the theme dropdown to set either Day Mode or Night Mode",
+    "prev": "Previous",
+    "next": "Next",
+    "close": "Close"
   }
   
