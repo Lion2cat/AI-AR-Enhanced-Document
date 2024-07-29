@@ -3,6 +3,9 @@ import { View, StyleSheet, Text } from 'react-native';
 import { useThemeContext } from '../components/ThemeContext';
 import i18n, { setLocale } from '../locales/i18n';
 import DropDownPicker from 'react-native-dropdown-picker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const LANGUAGE_KEY = 'selectedLanguage';
 
 const SetPage = () => {
   const { toggleTheme, isDarkTheme } = useThemeContext();
@@ -23,9 +26,10 @@ const SetPage = () => {
     { label: i18n.t('theme_dark'), value: 'dark' },
   ]);
 
-  const changeLanguage = (lang) => {
+  const changeLanguage = async (lang) => {
     setLocale(lang);
     setSelectedLanguage(lang);
+    await AsyncStorage.setItem(LANGUAGE_KEY, lang);
   };
 
   const changeTheme = (theme) => {
@@ -38,7 +42,25 @@ const SetPage = () => {
   };
 
   useEffect(() => {
-    i18n.locale = selectedLanguage;
+    const loadLanguageSetting = async () => {
+      const storedLanguage = await AsyncStorage.getItem(LANGUAGE_KEY);
+      if (storedLanguage) {
+        setSelectedLanguage(storedLanguage);
+      } else {
+        const deviceLanguage = getLocales()[0].languageTag;
+        const languageCode = deviceLanguage.split('-')[0];
+        if (['en', 'zh', 'fr'].includes(languageCode)) {
+          setSelectedLanguage(languageCode);
+        } else {
+          setSelectedLanguage('en');
+        }
+      }
+    };
+
+    loadLanguageSetting();
+  }, []);
+
+  useEffect(() => {
     setLanguageItems([
       { label: 'English', value: 'en' },
       { label: '中文', value: 'zh' },

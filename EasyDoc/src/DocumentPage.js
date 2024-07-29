@@ -48,16 +48,26 @@ const WebViewComponent = () => {
   }, []);
 
   const injectedJavaScript = `
-    document.querySelectorAll('figure').forEach((figure) => {
-      figure.addEventListener('click', () => {
-        const figureId = figure.id;
-        window.ReactNativeWebView.postMessage(figureId);
+  (function() {
+    const imageMappings = ${JSON.stringify(imageMappings)};
+    document.querySelectorAll('img').forEach((img) => {
+      const src = img.getAttribute('src');
+      const imageName = src.match(/[^/]+(?=\\.[^/.]+$)/)[0];
+      if (imageMappings[imageName]) {
+        img.style.border = '2px solid red';
+      }
+      img.addEventListener('click', () => {
+        if (imageMappings[imageName]) {
+          window.ReactNativeWebView.postMessage(imageName);
+        }
       });
     });
-  `;
+  })();
+`;
 
   const onMessage = (event) => {
     const figureId = event.nativeEvent.data;
+    console.log(figureId);
     const imageKey = imageMappings[figureId];
     if (imageKey && images[imageKey]) {
       setCurrentImages(images[imageKey]);
@@ -105,11 +115,23 @@ const WebViewComponent = () => {
     setImageVisible(false);
   };
 
+  const getDocumentationUrl = () => {
+    switch (i18n.locale) {
+      case 'zh':
+        return 'https://www.ibm.com/docs/zh/db2/11.5?topic=utilization-memory-allocation';
+      case 'fr':
+        return 'https://www.ibm.com/docs/fr/db2/11.5?topic=utilization-memory-allocation';
+      case 'en':
+      default:
+        return 'https://www.ibm.com/docs/en/db2/11.5?topic=utilization-memory-allocation';
+    }
+  };
+
   return (
     <View style={styles.container}>
       <WebView
         originWhitelist={['*']}
-        source={{ uri: 'https://www.ibm.com/docs/en/db2/11.5?topic=utilization-memory-allocation' }}
+        source={{ uri: getDocumentationUrl() }}
         style={styles.webview}
         injectedJavaScript={injectedJavaScript}
         onMessage={onMessage}
