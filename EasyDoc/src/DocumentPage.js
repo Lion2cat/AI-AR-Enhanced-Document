@@ -4,23 +4,21 @@ import { WebView } from 'react-native-webview';
 import * as Speech from 'expo-speech';
 import i18n from '../locales/i18n';
 import imageMappings from './imgMapper/DB2ImageMapper.json';
+import imageConfig from './imageConfig.json';
+import documentationUrls from './documentationUrls.json';
 
 const WebViewComponent = () => {
   const [isImageVisible, setImageVisible] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [showInfo, setShowInfo] = useState(false); // 状态变量控制说明文本的显示
-  const [isSpeaking, setIsSpeaking] = useState(false); // 状态变量控制语音播放状态
-  const [selectedVoice, setSelectedVoice] = useState(null); // 状态变量控制选择的语音
-  const [currentImages, setCurrentImages] = useState(null); // 用于保存当前加载的图片集
-
-  const memory_allocation = [
-    { name: 'MemoryText', path: require('../assets/documentPage/memory_allocation/memory_allocation.png'), text: i18n.t('MemoryText') },
-    { name: 'DBMSMText', path: require('../assets/documentPage/memory_allocation/dbmsm.png'), text: i18n.t('DBMSMText') },
-    { name: 'DBInstanceText', path: require('../assets/documentPage/memory_allocation/dbInstance.png'), text: i18n.t('DBInstanceText') },
-  ];
+  const [showInfo, setShowInfo] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [selectedVoice, setSelectedVoice] = useState(null);
+  const [currentImages, setCurrentImages] = useState(null);
 
   const images = {
-    'memory_allocation': memory_allocation
+     "memory_allocation": require('../assets/documentPage/memory_allocation/memory_allocation.png'),
+     "dbmsm": require('../assets/documentPage/memory_allocation/dbmsm.png'),
+     "dbInstance": require('../assets/documentPage/memory_allocation/dbInstance.png')
   };
 
   useEffect(() => {
@@ -65,17 +63,21 @@ const WebViewComponent = () => {
   })();
 `;
 
-  const onMessage = (event) => {
-    const figureId = event.nativeEvent.data;
-    console.log(figureId);
-    const imageKey = imageMappings[figureId];
-    if (imageKey && images[imageKey]) {
-      setCurrentImages(images[imageKey]);
-      setCurrentImageIndex(0);
-      setImageVisible(true);
-      setShowInfo(true);
-    }
-  };
+    const onMessage = (event) => {
+      const figureId = event.nativeEvent.data;
+      const imageKey = imageMappings[figureId];
+      if (imageKey && imageConfig[imageKey]) {
+        const loadedImages = imageConfig[imageKey].map(img => ({
+          ...img,
+          path: images[img.key],
+          text: i18n.t(img.textKey)
+        }));
+        setCurrentImages(loadedImages);
+        setCurrentImageIndex(0);
+        setImageVisible(true);
+        setShowInfo(true);
+      }
+    };
 
   const handleSpeak = () => {
     Speech.isSpeakingAsync().then((speaking) => {
@@ -116,15 +118,7 @@ const WebViewComponent = () => {
   };
 
   const getDocumentationUrl = () => {
-    switch (i18n.locale) {
-      case 'zh':
-        return 'https://www.ibm.com/docs/zh/db2/11.5?topic=utilization-memory-allocation';
-      case 'fr':
-        return 'https://www.ibm.com/docs/fr/db2/11.5?topic=utilization-memory-allocation';
-      case 'en':
-      default:
-        return 'https://www.ibm.com/docs/en/db2/11.5?topic=utilization-memory-allocation';
-    }
+    return documentationUrls[i18n.locale] || documentationUrls['en'];
   };
 
   return (
