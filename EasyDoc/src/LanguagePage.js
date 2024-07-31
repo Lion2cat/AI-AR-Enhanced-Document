@@ -6,8 +6,7 @@ import i18n, { setLocale } from '../locales/i18n';
 const languages = [
   { code: 'en', label: 'English' },
   { code: 'zh', label: '中文' },
-  { code: 'fr', label: 'Français'}
-  // Add more languages here if needed
+  { code: 'fr', label: 'Français' }
 ];
 
 export default function LanguagePage({ navigation }) {

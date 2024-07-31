@@ -2,11 +2,12 @@
   import { NavigationContainer } from '@react-navigation/native';
   import { createStackNavigator } from '@react-navigation/stack';
   import HomePage from './src/HomePage';
-  import CameraPage from './src/CameraPage';
+  import CameraPage from './src/ARCameraScreen';
   import ChatPage from './src/ChatPage';
   import SetPage from './src/SetPage';
+  import HelpPage from './src/HelpPage';
+  import DocumentPage from './src/DocumentPage';
   import { ThemeProvider } from './components/ThemeContext';
-  import { View, Text } from 'react-native';
   import i18n, { addLocaleChangeListener } from './locales/i18n';
 
   const Stack = createStackNavigator();
@@ -28,23 +29,17 @@
 
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
+        <Stack.Navigator initialRouteName={i18n.t('home')}>
           <Stack.Screen name="Home" component={HomePage} options={{ title: i18n.t('home') }} />
           <Stack.Screen name="Camera" component={CameraPage} options={{ title: i18n.t('camera') }} />
+          <Stack.Screen name="Document" component={DocumentPage} options={{ title: i18n.t('document') }} />
           <Stack.Screen name="Chat" component={ChatPage} options={{ title: i18n.t('chat') }} />
           <Stack.Screen name="Settings" component={SetPage} options={{ title: i18n.t('setting') }} />
-          <Stack.Screen name="Help" component={HelpScreen} options={{ title: i18n.t('help') }} />
+          <Stack.Screen name="Help" component={HelpPage} options={{ title: i18n.t('help') }} />
         </Stack.Navigator>
       </NavigationContainer>
     );
   };
-
-  const HelpScreen = () => (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Help Screen</Text>
-    </View>
-  );
-
 
   export default function App() {
     return (
