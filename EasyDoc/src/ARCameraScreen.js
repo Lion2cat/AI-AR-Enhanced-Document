@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   },
   infoWindow: {
     height: Dimensions.get('window').height / 3,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)', // 半透明黑色背景
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
     borderRadius: 20,
     padding: 20,
     alignItems: 'center',

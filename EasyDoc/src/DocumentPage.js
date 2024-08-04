@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Modal, Image, Text, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import { WebView } from 'react-native-webview';
+import { Picker } from '@react-native-picker/picker';
 import * as Speech from 'expo-speech';
-import i18n from '../locales/i18n';
+import i18n, { setLocale, getCurrentLocale } from '../locales/i18n';
 import imageMappings from './imgMapper/DB2ImageMapper.json';
 import imageConfig from './imageConfig.json';
 import documentationUrls from './documentationUrls.json';
@@ -14,6 +15,7 @@ const WebViewComponent = () => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [selectedVoice, setSelectedVoice] = useState(null);
   const [currentImages, setCurrentImages] = useState(null);
+  const [language, setLanguage] = useState(getCurrentLocale());
 
   const images = {
      "memory_allocation": require('../assets/documentPage/memory_allocation/memory_allocation.png'),
@@ -25,7 +27,7 @@ const WebViewComponent = () => {
     const loadVoices = async () => {
       const voices = await Speech.getAvailableVoicesAsync();
       let humanLikeVoice;
-      switch (i18n.locale) {
+      switch (language) {
         case 'en':
           humanLikeVoice = voices.find(voice => voice.name.includes("en-UK") && voice.quality === "Enhanced");
           break;
@@ -43,25 +45,25 @@ const WebViewComponent = () => {
     };
 
     loadVoices();
-  }, []);
+  }, [language]);
 
   const injectedJavaScript = `
-  (function() {
-    const imageMappings = ${JSON.stringify(imageMappings)};
-    document.querySelectorAll('img').forEach((img) => {
-      const src = img.getAttribute('src');
-      const imageName = src.match(/[^/]+(?=\\.[^/.]+$)/)[0];
-      if (imageMappings[imageName]) {
-        img.style.border = '2px solid red';
-      }
-      img.addEventListener('click', () => {
-        if (imageMappings[imageName]) {
-          window.ReactNativeWebView.postMessage(imageName);
-        }
-      });
-    });
-  })();
-`;
+      (function() {
+        const imageMappings = ${JSON.stringify(imageMappings)};
+        document.querySelectorAll('img').forEach((img) => {
+          const src = img.getAttribute('src');
+          const imageName = src.match(/[^/]+(?=\\.[^/.]+$)/)[0];
+          if (imageMappings[imageName]) {
+            img.style.border = '2px solid red';
+          }
+          img.addEventListener('click', () => {
+            if (imageMappings[imageName]) {
+              window.ReactNativeWebView.postMessage(imageName);
+            }
+          });
+        });
+      })();
+    `;
 
     const onMessage = (event) => {
       const figureId = event.nativeEvent.data;
@@ -85,7 +87,8 @@ const WebViewComponent = () => {
         Speech.stop();
         setIsSpeaking(false);
       } else {
-        Speech.speak(currentImages[currentImageIndex].text, {
+        const textToRead = i18n.translations[language][currentImages[currentImageIndex].textKey];
+        Speech.speak(textToRead, {
           voice: selectedVoice ? selectedVoice.identifier : null,
           onDone: () => setIsSpeaking(false),
           onStopped: () => setIsSpeaking(false)
@@ -93,6 +96,11 @@ const WebViewComponent = () => {
         setIsSpeaking(true);
       }
     });
+  };
+
+  const handleLanguageChange = async (newLanguage) => {
+    await setLocale(newLanguage);
+    setLanguage(newLanguage);
   };
 
   const handleNextImage = () => {
@@ -123,6 +131,15 @@ const WebViewComponent = () => {
 
   return (
     <View style={styles.container}>
+      <Picker
+        selectedValue={language}
+        onValueChange={(itemValue) => handleLanguageChange(itemValue)}
+        style={{ height: 50, width: 150 }}
+      >
+        <Picker.Item label="English" value="en" />
+        <Picker.Item label="中文" value="zh" />
+        <Picker.Item label="Français" value="fr" />
+      </Picker>
       <WebView
         originWhitelist={['*']}
         source={{ uri: getDocumentationUrl() }}
