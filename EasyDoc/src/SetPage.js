@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useThemeContext } from '../components/ThemeContext';
 import i18n, { setLocale } from '../locales/i18n';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -73,48 +73,48 @@ const SetPage = () => {
   }, [selectedLanguage]);
 
   return (
-    <View style={isDarkTheme ? styles.darkContainer : styles.lightContainer}>
-      <View style={styles.contentWrapper}>
-        <View style={styles.settingContainer}>
-          <Text style={isDarkTheme ? styles.darkThemeText : styles.lightThemeText}>{i18n.t('theme')}</Text>
-          <View style={styles.dropdownWrapper}>
-            <DropDownPicker
-              open={themeOpen}
-              value={selectedTheme}
-              items={themeItems}
-              setOpen={setThemeOpen}
-              setValue={setSelectedTheme}
-              setItems={setThemeItems}
-              onChangeValue={(value) => changeTheme(value)}
-              placeholder={i18n.t('select_theme')}
-              style={isDarkTheme ? styles.darkPicker : styles.lightPicker}
-              dropDownContainerStyle={isDarkTheme ? styles.darkDropdownContainer : styles.lightDropdownContainer}
-              textStyle={isDarkTheme ? styles.darkPickerText : styles.lightPickerText}
-              labelStyle={isDarkTheme ? styles.darkPickerText : styles.lightPickerText}
-              theme={isDarkTheme ? 'DARK' : 'LIGHT'}
-            />
-          </View>
-        </View>
+    <View style={[styles.container, isDarkTheme ? styles.darkContainer : styles.lightContainer]}>
+      <Text style={[styles.title, isDarkTheme ? styles.darkThemeText : styles.lightThemeText]}>{i18n.t('setting')}</Text>
 
-        <View style={styles.settingContainer}>
-          <Text style={isDarkTheme ? styles.darkThemeText : styles.lightThemeText}>{i18n.t('language')}</Text>
-          <View style={styles.dropdownWrapper}>
-            <DropDownPicker
-              open={languageOpen}
-              value={selectedLanguage}
-              items={languageItems}
-              setOpen={setLanguageOpen}
-              setValue={setSelectedLanguage}
-              setItems={setLanguageItems}
-              onChangeValue={(value) => changeLanguage(value)}
-              placeholder={i18n.t('select_language')}
-              style={isDarkTheme ? styles.darkPicker : styles.lightPicker}
-              dropDownContainerStyle={isDarkTheme ? styles.darkDropdownContainer : styles.lightDropdownContainer}
-              textStyle={isDarkTheme ? styles.darkPickerText : styles.lightPickerText}
-              labelStyle={isDarkTheme ? styles.darkPickerText : styles.lightPickerText}
-              theme={isDarkTheme ? 'DARK' : 'LIGHT'}
-            />
-          </View>
+      <View style={styles.settingContainer}>
+        <Text style={isDarkTheme ? styles.darkThemeText : styles.lightThemeText}>{i18n.t('theme')}</Text>
+        <View style={styles.dropdownWrapper}>
+          <DropDownPicker
+            open={themeOpen}
+            value={selectedTheme}
+            items={themeItems}
+            setOpen={setThemeOpen}
+            setValue={setSelectedTheme}
+            setItems={setThemeItems}
+            onChangeValue={(value) => changeTheme(value)}
+            placeholder={i18n.t('select_theme')}
+            style={isDarkTheme ? styles.darkPicker : styles.lightPicker}
+            dropDownContainerStyle={isDarkTheme ? styles.darkDropdownContainer : styles.lightDropdownContainer}
+            textStyle={isDarkTheme ? styles.darkPickerText : styles.lightPickerText}
+            labelStyle={isDarkTheme ? styles.darkPickerText : styles.lightPickerText}
+            theme={isDarkTheme ? 'DARK' : 'LIGHT'}
+          />
+        </View>
+      </View>
+
+      <View style={styles.settingContainer}>
+        <Text style={isDarkTheme ? styles.darkThemeText : styles.lightThemeText}>{i18n.t('language')}</Text>
+        <View style={styles.dropdownWrapper}>
+          <DropDownPicker
+            open={languageOpen}
+            value={selectedLanguage}
+            items={languageItems}
+            setOpen={setLanguageOpen}
+            setValue={setSelectedLanguage}
+            setItems={setLanguageItems}
+            onChangeValue={(value) => changeLanguage(value)}
+            placeholder={i18n.t('select_language')}
+            style={isDarkTheme ? styles.darkPicker : styles.lightPicker}
+            dropDownContainerStyle={isDarkTheme ? styles.darkDropdownContainer : styles.lightDropdownContainer}
+            textStyle={isDarkTheme ? styles.darkPickerText : styles.lightPickerText}
+            labelStyle={isDarkTheme ? styles.darkPickerText : styles.lightPickerText}
+            theme={isDarkTheme ? 'DARK' : 'LIGHT'}
+          />
         </View>
       </View>
     </View>
@@ -122,23 +122,23 @@ const SetPage = () => {
 };
 
 const styles = StyleSheet.create({
-  lightContainer: {
+  container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#d0d0c0',
     padding: 20,
+  },
+  title: {
+    fontFamily: 'Outfit-Bold',
+    fontSize: 36,
+    marginBottom: 40,
+    textAlign: 'center',
+  },
+  lightContainer: {
+    backgroundColor: '#d0d0c0',
   },
   darkContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: '#242c40',
-    padding: 20,
-  },
-  contentWrapper: {
-    marginTop: 230,
-    width: '50%',
   },
   lightThemeText: {
     color: '#242c40',
@@ -152,30 +152,27 @@ const styles = StyleSheet.create({
   },
   settingContainer: {
     alignItems: 'center',
-    marginBottom: 100,
+    marginBottom: 40,
+    width: '80%',
   },
   dropdownWrapper: {
     width: '100%',
   },
   lightPicker: {
     height: 50,
-    width: '100%',
     borderColor: '#242c40',
     backgroundColor: '#f5f5f5',
   },
   darkPicker: {
     height: 50,
-    width: '100%',
     borderColor: '#d0d0c0',
     backgroundColor: '#3b3b3b',
   },
   lightDropdownContainer: {
     borderColor: '#242c40',
-    width: '100%',
   },
   darkDropdownContainer: {
     borderColor: '#d0d0c0',
-    width: '100%',
   },
   lightPickerText: {
     color: '#242c40',
