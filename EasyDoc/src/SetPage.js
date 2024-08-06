@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'Outfit-Bold',
-    fontSize: 36,
+    fontSize: 72,
     marginBottom: 40,
     textAlign: 'center',
   },
@@ -152,7 +152,8 @@ const styles = StyleSheet.create({
   },
   settingContainer: {
     alignItems: 'center',
-    marginBottom: 40,
+    marginBottom: 20, // 调整这里的数值
+    marginTop: 60,    // 或者添加 marginTop 来增大上下间距
     width: '80%',
   },
   dropdownWrapper: {
@@ -183,3 +184,4 @@ const styles = StyleSheet.create({
 });
 
 export default SetPage;
+

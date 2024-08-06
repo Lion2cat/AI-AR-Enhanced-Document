@@ -16,7 +16,12 @@ const WebViewComponent = () => {
   const [selectedVoice, setSelectedVoice] = useState(null);
   const [currentImages, setCurrentImages] = useState(null);
 
-  // 保存当前全局语言设置到临时变量
+  const images = {
+     "memory_allocation": require('../assets/documentPage/memory_allocation/memory_allocation.png'),
+     "dbmsm": require('../assets/documentPage/memory_allocation/dbmsm.png'),
+     "dbInstance": require('../assets/documentPage/memory_allocation/dbInstance.png')
+  };
+
   const globalLanguage = getCurrentLocale();
   const [language, setLanguage] = useState(globalLanguage);
 
@@ -262,8 +267,8 @@ const styles = StyleSheet.create({
   },
   infoWindow: {
     width: '90%',
-    height: Dimensions.get('window').height / 3, 
-    backgroundColor: 'rgba(0, 0, 0, 0.8)', 
+    height: Dimensions.get('window').height / 3,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
     borderRadius: 20,
     padding: 20,
     alignItems: 'center',
