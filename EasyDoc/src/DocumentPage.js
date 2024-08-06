@@ -15,13 +15,15 @@ const WebViewComponent = () => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [selectedVoice, setSelectedVoice] = useState(null);
   const [currentImages, setCurrentImages] = useState(null);
-  const [language, setLanguage] = useState(getCurrentLocale());
 
   const images = {
      "memory_allocation": require('../assets/documentPage/memory_allocation/memory_allocation.png'),
      "dbmsm": require('../assets/documentPage/memory_allocation/dbmsm.png'),
      "dbInstance": require('../assets/documentPage/memory_allocation/dbInstance.png')
   };
+
+  const globalLanguage = getCurrentLocale();
+  const [language, setLanguage] = useState(globalLanguage);
 
   useEffect(() => {
     const loadVoices = async () => {
@@ -45,41 +47,46 @@ const WebViewComponent = () => {
     };
 
     loadVoices();
+
+    // 当组件卸载时恢复全局语言设置
+    return () => {
+      setLocale(globalLanguage);
+    };
   }, [language]);
 
   const injectedJavaScript = `
-      (function() {
-        const imageMappings = ${JSON.stringify(imageMappings)};
-        document.querySelectorAll('img').forEach((img) => {
-          const src = img.getAttribute('src');
-          const imageName = src.match(/[^/]+(?=\\.[^/.]+$)/)[0];
+    (function() {
+      const imageMappings = ${JSON.stringify(imageMappings)};
+      document.querySelectorAll('img').forEach((img) => {
+        const src = img.getAttribute('src');
+        const imageName = src.match(/[^/]+(?=\\.[^/.]+$)/)[0];
+        if (imageMappings[imageName]) {
+          img.style.border = '2px solid red';
+        }
+        img.addEventListener('click', () => {
           if (imageMappings[imageName]) {
-            img.style.border = '2px solid red';
+            window.ReactNativeWebView.postMessage(imageName);
           }
-          img.addEventListener('click', () => {
-            if (imageMappings[imageName]) {
-              window.ReactNativeWebView.postMessage(imageName);
-            }
-          });
         });
-      })();
-    `;
+      });
+    })();
+  `;
 
-    const onMessage = (event) => {
-      const figureId = event.nativeEvent.data;
-      const imageKey = imageMappings[figureId];
-      if (imageKey && imageConfig[imageKey]) {
-        const loadedImages = imageConfig[imageKey].map(img => ({
-          ...img,
-          path: images[img.key],
-          text: i18n.t(img.textKey)
-        }));
-        setCurrentImages(loadedImages);
-        setCurrentImageIndex(0);
-        setImageVisible(true);
-        setShowInfo(true);
-      }
-    };
+  const onMessage = (event) => {
+    const figureId = event.nativeEvent.data;
+    const imageKey = imageMappings[figureId];
+    if (imageKey && imageConfig[imageKey]) {
+      const loadedImages = imageConfig[imageKey].map(img => ({
+        ...img,
+        path: images[img.key],
+        text: i18n.t(img.textKey, { locale: language })
+      }));
+      setCurrentImages(loadedImages);
+      setCurrentImageIndex(0);
+      setImageVisible(true);
+      setShowInfo(true);
+    }
+  };
 
   const handleSpeak = () => {
     Speech.isSpeakingAsync().then((speaking) => {
@@ -98,8 +105,7 @@ const WebViewComponent = () => {
     });
   };
 
-  const handleLanguageChange = async (newLanguage) => {
-    await setLocale(newLanguage);
+  const handleLanguageChange = (newLanguage) => {
     setLanguage(newLanguage);
   };
 
@@ -126,14 +132,14 @@ const WebViewComponent = () => {
   };
 
   const getDocumentationUrl = () => {
-    return documentationUrls[i18n.locale] || documentationUrls['en'];
+    return documentationUrls[language] || documentationUrls['en'];
   };
 
   return (
     <View style={styles.container}>
       <Picker
         selectedValue={language}
-        onValueChange={(itemValue) => handleLanguageChange(itemValue)}
+        onValueChange={handleLanguageChange}
         style={{ height: 50, width: 150 }}
       >
         <Picker.Item label="English" value="en" />
@@ -152,11 +158,11 @@ const WebViewComponent = () => {
           visible={isImageVisible}
           transparent={true}
           animationType="slide"
-          onRequestClose={() => handleCloseInfo()}
+          onRequestClose={handleCloseInfo}
         >
           <View style={styles.modalContainer}>
             <View style={styles.imageContainer}>
-              <Image 
+              <Image
                 source={currentImages[currentImageIndex].path}
                 style={styles.image}
               />
@@ -193,7 +199,7 @@ const WebViewComponent = () => {
                 <Text style={styles.buttonText}>{i18n.t('prev')}</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => handleCloseImage()}
+                onPress={handleCloseImage}
                 style={styles.button}
               >
                 <Text style={styles.buttonText}>{i18n.t('close')}</Text>
@@ -261,8 +267,8 @@ const styles = StyleSheet.create({
   },
   infoWindow: {
     width: '90%',
-    height: Dimensions.get('window').height / 3, 
-    backgroundColor: 'rgba(0, 0, 0, 0.8)', 
+    height: Dimensions.get('window').height / 3,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
     borderRadius: 20,
     padding: 20,
     alignItems: 'center',
