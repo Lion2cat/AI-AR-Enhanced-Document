@@ -2,6 +2,7 @@
     "title": "EasyDoc",
     "subtitle": "Open the camera to enhance the document",
     "home": "Home",
+    "guide": "Guide",
     "language": "Language",
     "help": "Help",
     "chat": "Chat Assistant",
@@ -28,15 +29,23 @@
     "About language/theme": "About language/theme",
     "How to use AR": "How to use AR",
     "Scan the documentation": "Click on the image to open the AR camera, and focus on the document, making sure the document fragment is in the center of the screen",
+    "Scan the documentation2": "Click on the image to open the AR camera, and focus on the image",
     "Touch AR": "After the scan is successful, the screen will display relevant enhanced content, and you can interact with the content by tapping the screen",
+    "Touch AR2": "After the scan is successful, you can interact with the content by tapping the screen",
     "How to use Chat Assistant": "How to use documentation chat assistant",
+    "How to use Chat Assistant2": "Our chat assistant",
     "Click text box": "Click on the text box to enter your question",
     "Do the best": "You can use our AI assistant as you would in a daily conversation and he will do his best to answer you",
+    "Do the best2": "You can use our AI assistant as you would in a daily conversation",
     "Language and Theme Settings": "Language and Theme Settings",
     "Set language": "In settings, click the language dropdown to set the language",
     "Set theme": "In settings, click the theme dropdown to set either Day Mode or Night Mode",
     "prev": "Previous",
     "next": "Next",
-    "close": "Close"
+    "close": "Close",
+    "Welcome message": "Our application can vividly display 2D documents",
+    "Next": "Next",
+    "Previous": "Prev",
+    "Get Started": "Let's get started!"
   }
   

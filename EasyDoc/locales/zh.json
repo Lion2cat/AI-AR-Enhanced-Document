@@ -2,6 +2,7 @@
     "title": "EasyDoc",
     "subtitle": "打开相机来增强文档",
     "home": "主页",
+    "guide": "导航",
     "language": "语言",
     "help": "帮助",
     "chat": "聊天助手",
@@ -28,15 +29,23 @@
     "About language/theme": "关于语言/主题",
     "How to use AR": "如何使用AR",
     "Scan the documentation": "点击图片打开AR摄像机，对准文档，确保文档片段在屏幕中间",
+    "Scan the documentation2": "点击图片打开AR摄像机，对准文档，确保文档片段在屏幕中间",
     "Touch AR": "扫描成功后，屏幕上会显示相关的增强内容，您可以点击屏幕与这些内容进行互动",
+    "Touch AR2": "扫描成功后，屏幕上会显示相关的增强内容，您可以点击屏幕与这些内容进行互动",
     "How to use Chat Assistant": "如何使用文档聊天助手",
+    "How to use Chat Assistant2": "如何使用文档聊天助手",
     "Click text box": "点击文本框可以输入您的问题",
     "Do the best": "您可以像日常对话一样使用我们的人工智能助手，他会尽力给您答复",
+    "Do the best2": "您可以像日常对话一样使用我们的人工智能助手，他会尽力给您答复",
     "Language and Theme Settings": "语言和主题设置",
     "Set language": "设置中点击语言下拉框可以设置语言",
     "Set theme": "设置中点击主题下拉框可以设置白天或者黑夜模式",
     "prev": "上一页",
     "next": "下一页",
-    "close": "关闭"
+    "close": "关闭",
+    "Welcome message": "我们的应用可以生动地展示平面文档",
+    "Next": "下一页",
+    "Previous": "上一页",
+    "Get Started": "让我们开始吧！"
 }
   

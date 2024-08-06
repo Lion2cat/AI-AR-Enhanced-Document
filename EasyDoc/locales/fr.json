@@ -2,6 +2,7 @@
     "title": "EasyDoc",
     "subtitle": "Ouvrez la caméra pour améliorer le document",
     "home": "Accueil",
+    "guide": "Guide",
     "language": "Langue",
     "help": "Aide",
     "chat": "Assistant de Chat",
@@ -37,6 +38,10 @@
     "Set theme": "Dans les paramètres, cliquez sur le menu déroulant du thème pour définir le Mode Jour ou le Mode Nuit",
     "prev": "Précédent",
     "next": "Suivant",
-    "close": "Fermer"
+    "close": "Fermer",
+    "Welcome message": "Notre application donne vie aux 2D documents",
+    "Next": "Page suivante",
+    "Previous": "Page précédente",
+    "Get Started": "Commençons!"
   }
   
