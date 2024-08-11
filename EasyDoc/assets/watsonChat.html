@@ -6,7 +6,7 @@
             position: fixed;
             top: 5px;
             right: 10px;
-            z-index: 2147483647;
+            z-index: 2147483647;//make sure the button at top layer
             border: none;
             background: none;
         }
@@ -38,37 +38,44 @@
       function generateTextFromMessage(message) {
         return message.output.generic.map(message => message.text).join(' ');
       }
-      //
-      function detectLanguage(message) {
-
-      }
-      //get audio from ibm cloud TTS
+      //get audio from tts service
       function speakText(text) {
-        const apiKey = "bD64TXZXdKLWQ1gJ6qZjJT96JnCvZZi6pDOTeoygasA9";
-        const url = "https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/instances/728eb365-d9b9-46a4-95e5-1d107fa503fa";
-        const chineseCharPattern = /[\u4e00-\u9fff]/;
-        let voice = "en-GB_KateV3Voice";
-        if(chineseCharPattern.test(text)) {
-          voice = "notread";
+        const chineseCharPattern = /[\u4e00-\u9fff]/;//Detecting is there chinese in the response
+        if(chineseCharPattern.test(text)) {//use Baidu api
+          const token = "24.60e7ce7780c473b5d94202746e172b79.2592000.1725978569.282335-105424984";
+          fetch("https://tsn.baidu.com/text2audio?tex=" + text + "&lan=zh&cuid=120934871092384710&ctp=1&tok=" + token, {
+            method: "GET",
+          })
+          .then(response => response.blob())
+          .then(response => {
+            if (currentAudio) {
+              currentAudio.pause(); // stop current audio if it is playing
+            }
+            const audioUrl = URL.createObjectURL(response);
+            currentAudio = new Audio(audioUrl);
+            currentAudio.play();
+          })
         }
-        else {
-          voice = "en-GB_KateV3Voice";
+        else {//use IBM api
+          const apiKey = "bD64TXZXdKLWQ1gJ6qZjJT96JnCvZZi6pDOTeoygasA9";
+          const url = "https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/instances/728eb365-d9b9-46a4-95e5-1d107fa503fa";
+          const voice = "en-GB_KateV3Voice";
+          fetch(url + "/v1/synthesize?accept=audio/mp3&text=" + text + "&voice=" + voice, {
+            method: "GET",
+            headers: {
+              "Authorization": "Basic " + btoa("apikey:" + apiKey)//Authentication using apikey
+            }
+          })
+          .then(response => response.blob())
+          .then(response => {
+            if (currentAudio) {
+              currentAudio.pause(); // stop current audio if it is playing
+            }
+            const audioUrl = URL.createObjectURL(response);
+            currentAudio = new Audio(audioUrl);
+            currentAudio.play();
+          })
         }
-        fetch(url + "/v1/synthesize?accept=audio/mp3&text=" + text + "&voice=" + voice, {
-          method: "GET",
-          headers: {
-            "Authorization": "Basic " + btoa("apikey:" + apiKey)//Authentication using apikey
-          }
-        })
-        .then(response => response.blob())
-        .then(response => {
-          if (currentAudio) {
-            currentAudio.pause(); // stop current audio if it is playing
-          }
-          const audioUrl = URL.createObjectURL(response);
-          currentAudio = new Audio(audioUrl);
-          currentAudio.play();
-        })
       }
       //play audio
       function handleMessageReceive(event) {
