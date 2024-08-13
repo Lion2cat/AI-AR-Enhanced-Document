@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import * as Font from 'expo-font';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
 import { useThemeContext } from '../components/ThemeContext';
 import i18n from '../locales/i18n';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const PRIVACY_KEY = 'privacyAgreement';
 
 const HomePage = () => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [locale, setLocaleState] = useState(i18n.locale);
+  const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
   const scale = useSharedValue(1);
   const { isDarkTheme } = useThemeContext();
@@ -50,6 +54,25 @@ const HomePage = () => {
     };
   });
 
+  const handleCameraPress = async () => {
+    const privacyAgreement = await AsyncStorage.getItem(PRIVACY_KEY);
+    if (privacyAgreement === 'disagree') {
+      setModalVisible(true);
+    } else {
+      navigation.navigate('Camera');
+    }
+  };
+
+  const handleAgree = async () => {
+    await AsyncStorage.setItem(PRIVACY_KEY, 'agree');
+    setModalVisible(false);
+    navigation.navigate('Camera');
+  };
+
+  const handleDisagree = () => {
+    setModalVisible(false);
+  };
+
   return (
     <View style={[styles.container, themeContainerStyle]} testID="container">
       <Text style={[styles.title, themeTextStyle]} testID="textStyle">{i18n.t('title')}</Text>
@@ -57,11 +80,11 @@ const HomePage = () => {
 
       <Animated.View style={[styles.imageContainer, animatedStyle]}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Camera')}
+          onPress={handleCameraPress}
           onPressIn={handlePressIn}
           onPressOut={handlePressOut}
-          accessibilityRole="button"//测试相关
-          accessibilityLabel="CameraButton"//测试相关
+          accessibilityRole="button"
+          accessibilityLabel="CameraButton"
         >
           <Image
             source={require('../assets/camera.png')}
@@ -71,36 +94,56 @@ const HomePage = () => {
       </Animated.View>
 
       <View style={styles.iconButtonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Document')}
-        >
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Document')}>
           <Text style={styles.buttonText} numberOfLines={1} adjustsFontSizeToFit>{i18n.t('document')}</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.iconButtonContainer}>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Chat')}
-          accessibilityRole="button"//测试相关
-          accessibilityLabel="ChatButton"//测试相关
+          accessibilityRole="button"
+          accessibilityLabel="ChatButton"
         >
           <Text style={styles.buttonText} numberOfLines={1} adjustsFontSizeToFit>{i18n.t('chat')}</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.iconButtonContainer}>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Help')}
-          accessibilityRole="button"//测试相关
-          accessibilityLabel="HelpButton"//测试相关
+          accessibilityRole="button"
+          accessibilityLabel="HelpButton"
         >
           <Text style={styles.buttonText} numberOfLines={1} adjustsFontSizeToFit>{i18n.t('help')}</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.iconButtonContainer}>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Settings')}
-          accessibilityRole="button"//测试相关
-          accessibilityLabel="SettingsButton"//测试相关
+          accessibilityRole="button"
+          accessibilityLabel="SettingsButton"
         >
           <Text style={styles.buttonText} numberOfLines={1} adjustsFontSizeToFit>{i18n.t('setting')}</Text>
         </TouchableOpacity>
       </View>
+
+      <Modal
+        transparent={true}
+        animationType="slide"
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={[styles.modalContent, themeContainerStyle]}>
+            <Text style={[styles.modalText, themeTextStyle]}>{i18n.t('cameraAgreementText')}</Text>
+            <View style={styles.modalButtonContainer}>
+              <TouchableOpacity style={[styles.modalButton, styles.modalButtonCancel]} onPress={handleDisagree}>
+                <Text style={styles.buttonText}>{i18n.t('disagree')}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.modalButton} onPress={handleAgree}>
+                <Text style={styles.buttonText}>{i18n.t('agree')}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -166,6 +209,40 @@ const styles = StyleSheet.create({
   },
   darkThemeText: {
     color: '#d0d0c0',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    width: 300,
+    alignItems: 'center',
+  },
+  modalText: {
+    fontSize: 18,
+    fontFamily: 'Outfit-SemiBold',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  modalButtonContainer: {
+    flexDirection: 'row',
+  },
+  modalButton: {
+    backgroundColor: '#4C5483',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginHorizontal: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalButtonCancel: {
+    backgroundColor: '#d9534f',
   },
 });
 

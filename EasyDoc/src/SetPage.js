@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Modal, ScrollView, TouchableOpacity } from 'react-native';
 import { useThemeContext } from '../components/ThemeContext';
 import i18n, { setLocale } from '../locales/i18n';
 import DropDownPicker from 'react-native-dropdown-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LANGUAGE_KEY = 'selectedLanguage';
+const PRIVACY_KEY = 'privacyAgreement';
 
 const SetPage = () => {
   const { toggleTheme, isDarkTheme } = useThemeContext();
   const [selectedLanguage, setSelectedLanguage] = useState(i18n.locale);
   const [selectedTheme, setSelectedTheme] = useState(isDarkTheme ? 'dark' : 'light');
+  const [privacyAgreement, setPrivacyAgreement] = useState(null);
+  const [privacyModalVisible, setPrivacyModalVisible] = useState(false);
 
   const [languageOpen, setLanguageOpen] = useState(false);
   const [themeOpen, setThemeOpen] = useState(false);
+  const [privacyOpen, setPrivacyOpen] = useState(false);
 
   const [languageItems, setLanguageItems] = useState([
     { label: 'English', value: 'en' },
@@ -24,6 +28,11 @@ const SetPage = () => {
   const [themeItems, setThemeItems] = useState([
     { label: i18n.t('theme_light'), value: 'light' },
     { label: i18n.t('theme_dark'), value: 'dark' },
+  ]);
+
+  const [privacyItems, setPrivacyItems] = useState([
+    { label: i18n.t('agree'), value: 'agree' },
+    { label: i18n.t('disagree'), value: 'disagree' },
   ]);
 
   const changeLanguage = async (lang) => {
@@ -41,23 +50,26 @@ const SetPage = () => {
     setSelectedTheme(theme);
   };
 
+  const changePrivacyAgreement = async (agreement) => {
+    setPrivacyAgreement(agreement);
+    await AsyncStorage.setItem(PRIVACY_KEY, agreement);
+    setPrivacyModalVisible(false);
+  };
+
   useEffect(() => {
-    const loadLanguageSetting = async () => {
+    const loadSettings = async () => {
       const storedLanguage = await AsyncStorage.getItem(LANGUAGE_KEY);
       if (storedLanguage) {
         setSelectedLanguage(storedLanguage);
-      } else {
-        const deviceLanguage = getLocales()[0].languageTag;
-        const languageCode = deviceLanguage.split('-')[0];
-        if (['en', 'zh', 'fr'].includes(languageCode)) {
-          setSelectedLanguage(languageCode);
-        } else {
-          setSelectedLanguage('en');
-        }
+      }
+
+      const storedPrivacyAgreement = await AsyncStorage.getItem(PRIVACY_KEY);
+      if (storedPrivacyAgreement) {
+        setPrivacyAgreement(storedPrivacyAgreement);
       }
     };
 
-    loadLanguageSetting();
+    loadSettings();
   }, []);
 
   useEffect(() => {
@@ -69,6 +81,10 @@ const SetPage = () => {
     setThemeItems([
       { label: i18n.t('theme_light'), value: 'light' },
       { label: i18n.t('theme_dark'), value: 'dark' },
+    ]);
+    setPrivacyItems([
+      { label: i18n.t('agree'), value: 'agree' },
+      { label: i18n.t('disagree'), value: 'disagree' },
     ]);
   }, [selectedLanguage]);
 
@@ -93,6 +109,7 @@ const SetPage = () => {
             textStyle={isDarkTheme ? styles.darkPickerText : styles.lightPickerText}
             labelStyle={isDarkTheme ? styles.darkPickerText : styles.lightPickerText}
             theme={isDarkTheme ? 'DARK' : 'LIGHT'}
+            dropDownDirection="DOWN"
           />
         </View>
       </View>
@@ -114,9 +131,44 @@ const SetPage = () => {
             textStyle={isDarkTheme ? styles.darkPickerText : styles.lightPickerText}
             labelStyle={isDarkTheme ? styles.darkPickerText : styles.lightPickerText}
             theme={isDarkTheme ? 'DARK' : 'LIGHT'}
+            dropDownDirection="DOWN"
           />
         </View>
       </View>
+
+      <View style={styles.privacyLinkContainer}>
+        <TouchableOpacity onPress={() => setPrivacyModalVisible(true)}>
+          <Text style={styles.privacyLink}>{i18n.t('privacy_agreement')}</Text>
+        </TouchableOpacity>
+      </View>
+
+      <Modal
+        transparent={true}
+        visible={privacyModalVisible}
+        onRequestClose={() => setPrivacyModalVisible(false)}
+        animationType="slide"
+      >
+        <View style={styles.modalContainer}>
+          <View style={[styles.modalContent, isDarkTheme ? styles.darkModalContent : styles.lightModalContent]}>
+            <TouchableOpacity style={styles.modalCloseButton} onPress={() => setPrivacyModalVisible(false)}>
+              <Text style={styles.closeButtonText}>X</Text>
+            </TouchableOpacity>
+            <ScrollView style={styles.scrollView}>
+              <Text style={isDarkTheme ? styles.darkModalText : styles.lightModalText}>
+                {i18n.t('privacy_agreement_details')}
+              </Text>
+            </ScrollView>
+            <View style={styles.modalButtonContainer}>
+              <TouchableOpacity style={styles.modalButton} onPress={() => changePrivacyAgreement('disagree')}>
+                <Text style={styles.buttonText}>{i18n.t('disagree')}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.modalButton} onPress={() => changePrivacyAgreement('agree')}>
+                <Text style={styles.buttonText}>{i18n.t('agree')}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -152,8 +204,8 @@ const styles = StyleSheet.create({
   },
   settingContainer: {
     alignItems: 'center',
-    marginBottom: 20, // 调整这里的数值
-    marginTop: 60,    // 或者添加 marginTop 来增大上下间距
+    marginBottom: 20,
+    marginTop: 60,
     width: '80%',
   },
   dropdownWrapper: {
@@ -181,7 +233,76 @@ const styles = StyleSheet.create({
   darkPickerText: {
     color: '#d0d0c0',
   },
+  privacyLinkContainer: {
+    position: 'absolute',
+    bottom: 50,
+    width: '100%',
+    alignItems: 'center',
+  },
+  privacyLink: {
+    color: '#0000EE',
+    textDecorationLine: 'underline',
+    fontSize: 20,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    width: '80%',
+    maxHeight: '80%',
+    padding: 20,
+    borderRadius: 10,
+  },
+  lightModalContent: {
+    backgroundColor: '#ffffff',
+  },
+  darkModalContent: {
+    backgroundColor: '#333333',
+  },
+  modalCloseButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    zIndex: 1,
+  },
+  closeButtonText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#FF0000',
+  },
+  scrollView: {
+    marginVertical: 20,
+  },
+  lightModalText: {
+    fontSize: 16,
+    color: '#242c40',
+  },
+  darkModalText: {
+    fontSize: 16,
+    color: '#d0d0c0',
+  },
+  modalButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  modalButton: {
+    backgroundColor: '#4C5483',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginHorizontal: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    textAlign: 'center',
+  },
 });
 
 export default SetPage;
-

@@ -28,7 +28,12 @@ const GuidePage = ({ navigation }) => {
     {
       title: i18n.t('How to use AR'),
       subtitle: i18n.t('Touch AR2'),
-      image: require('../assets/HelpPage/AR.gif')
+      image: require('../assets/HelpPage/tapCamera.gif')
+    },
+    {
+      title: i18n.t('View the document'),
+      subtitle: i18n.t('View the document directly'),
+      image: require('../assets/HelpPage/document.gif')
     },
     {
       title: i18n.t('How to use Chat Assistant2'),
