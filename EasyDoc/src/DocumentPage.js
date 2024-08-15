@@ -1,33 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Modal, Image, Text, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import { WebView } from 'react-native-webview';
+import { Picker } from '@react-native-picker/picker';
 import * as Speech from 'expo-speech';
-import i18n from '../locales/i18n';
+import i18n, { setLocale, getCurrentLocale } from '../locales/i18n';
 import imageMappings from './imgMapper/DB2ImageMapper.json';
+import imageConfig from './imageConfig.json';
+import documentationUrls from './documentationUrls.json';
 
 const WebViewComponent = () => {
   const [isImageVisible, setImageVisible] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [showInfo, setShowInfo] = useState(false); // 状态变量控制说明文本的显示
-  const [isSpeaking, setIsSpeaking] = useState(false); // 状态变量控制语音播放状态
-  const [selectedVoice, setSelectedVoice] = useState(null); // 状态变量控制选择的语音
-  const [currentImages, setCurrentImages] = useState(null); // 用于保存当前加载的图片集
-
-  const memory_allocation = [
-    { name: 'MemoryText', path: require('../assets/documentPage/memory_allocation/memory_allocation.png'), text: i18n.t('MemoryText') },
-    { name: 'DBMSMText', path: require('../assets/documentPage/memory_allocation/dbmsm.png'), text: i18n.t('DBMSMText') },
-    { name: 'DBInstanceText', path: require('../assets/documentPage/memory_allocation/dbInstance.png'), text: i18n.t('DBInstanceText') },
-  ];
+  const [showInfo, setShowInfo] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [selectedVoice, setSelectedVoice] = useState(null);
+  const [currentImages, setCurrentImages] = useState(null);
 
   const images = {
-    'memory_allocation': memory_allocation
+     "memory_allocation": require('../assets/documentPage/memory_allocation/memory_allocation.png'),
+     "dbmsm": require('../assets/documentPage/memory_allocation/dbmsm.png'),
+     "dbInstance": require('../assets/documentPage/memory_allocation/dbInstance.png')
   };
+
+  const globalLanguage = getCurrentLocale();
+  const [language, setLanguage] = useState(globalLanguage);
 
   useEffect(() => {
     const loadVoices = async () => {
       const voices = await Speech.getAvailableVoicesAsync();
       let humanLikeVoice;
-      switch (i18n.locale) {
+      switch (language) {
         case 'en':
           humanLikeVoice = voices.find(voice => voice.name.includes("en-UK") && voice.quality === "Enhanced");
           break;
@@ -45,32 +47,41 @@ const WebViewComponent = () => {
     };
 
     loadVoices();
-  }, []);
+
+    // 当组件卸载时恢复全局语言设置
+    return () => {
+      setLocale(globalLanguage);
+    };
+  }, [language]);
 
   const injectedJavaScript = `
-  (function() {
-    const imageMappings = ${JSON.stringify(imageMappings)};
-    document.querySelectorAll('img').forEach((img) => {
-      const src = img.getAttribute('src');
-      const imageName = src.match(/[^/]+(?=\\.[^/.]+$)/)[0];
-      if (imageMappings[imageName]) {
-        img.style.border = '2px solid red';
-      }
-      img.addEventListener('click', () => {
+    (function() {
+      const imageMappings = ${JSON.stringify(imageMappings)};
+      document.querySelectorAll('img').forEach((img) => {
+        const src = img.getAttribute('src');
+        const imageName = src.match(/[^/]+(?=\\.[^/.]+$)/)[0];
         if (imageMappings[imageName]) {
-          window.ReactNativeWebView.postMessage(imageName);
+          img.style.border = '2px solid red';
         }
+        img.addEventListener('click', () => {
+          if (imageMappings[imageName]) {
+            window.ReactNativeWebView.postMessage(imageName);
+          }
+        });
       });
-    });
-  })();
-`;
+    })();
+  `;
 
   const onMessage = (event) => {
     const figureId = event.nativeEvent.data;
-    console.log(figureId);
     const imageKey = imageMappings[figureId];
-    if (imageKey && images[imageKey]) {
-      setCurrentImages(images[imageKey]);
+    if (imageKey && imageConfig[imageKey]) {
+      const loadedImages = imageConfig[imageKey].map(img => ({
+        ...img,
+        path: images[img.key],
+        text: i18n.t(img.textKey, { locale: language })
+      }));
+      setCurrentImages(loadedImages);
       setCurrentImageIndex(0);
       setImageVisible(true);
       setShowInfo(true);
@@ -83,7 +94,8 @@ const WebViewComponent = () => {
         Speech.stop();
         setIsSpeaking(false);
       } else {
-        Speech.speak(currentImages[currentImageIndex].text, {
+        const textToRead = i18n.translations[language][currentImages[currentImageIndex].textKey];
+        Speech.speak(textToRead, {
           voice: selectedVoice ? selectedVoice.identifier : null,
           onDone: () => setIsSpeaking(false),
           onStopped: () => setIsSpeaking(false)
@@ -91,6 +103,10 @@ const WebViewComponent = () => {
         setIsSpeaking(true);
       }
     });
+  };
+
+  const handleLanguageChange = (newLanguage) => {
+    setLanguage(newLanguage);
   };
 
   const handleNextImage = () => {
@@ -116,19 +132,20 @@ const WebViewComponent = () => {
   };
 
   const getDocumentationUrl = () => {
-    switch (i18n.locale) {
-      case 'zh':
-        return 'https://www.ibm.com/docs/zh/db2/11.5?topic=utilization-memory-allocation';
-      case 'fr':
-        return 'https://www.ibm.com/docs/fr/db2/11.5?topic=utilization-memory-allocation';
-      case 'en':
-      default:
-        return 'https://www.ibm.com/docs/en/db2/11.5?topic=utilization-memory-allocation';
-    }
+    return documentationUrls[language] || documentationUrls['en'];
   };
 
   return (
     <View style={styles.container}>
+      <Picker
+        selectedValue={language}
+        onValueChange={handleLanguageChange}
+        style={{ height: 50, width: 150 }}
+      >
+        <Picker.Item label="English" value="en" />
+        <Picker.Item label="中文" value="zh" />
+        <Picker.Item label="Français" value="fr" />
+      </Picker>
       <WebView
         originWhitelist={['*']}
         source={{ uri: getDocumentationUrl() }}
@@ -141,11 +158,11 @@ const WebViewComponent = () => {
           visible={isImageVisible}
           transparent={true}
           animationType="slide"
-          onRequestClose={() => handleCloseInfo()}
+          onRequestClose={handleCloseInfo}
         >
           <View style={styles.modalContainer}>
             <View style={styles.imageContainer}>
-              <Image 
+              <Image
                 source={currentImages[currentImageIndex].path}
                 style={styles.image}
               />
@@ -182,7 +199,7 @@ const WebViewComponent = () => {
                 <Text style={styles.buttonText}>{i18n.t('prev')}</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => handleCloseImage()}
+                onPress={handleCloseImage}
                 style={styles.button}
               >
                 <Text style={styles.buttonText}>{i18n.t('close')}</Text>
@@ -250,8 +267,8 @@ const styles = StyleSheet.create({
   },
   infoWindow: {
     width: '90%',
-    height: Dimensions.get('window').height / 3, 
-    backgroundColor: 'rgba(0, 0, 0, 0.8)', 
+    height: Dimensions.get('window').height / 3,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
     borderRadius: 20,
     padding: 20,
     alignItems: 'center',

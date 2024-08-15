@@ -1,0 +1,19 @@
+{
+  "memory_allocation": [
+    {
+      "name": "MemoryText",
+      "key": "memory_allocation",
+      "textKey": "MemoryText"
+    },
+    {
+      "name": "DBMSMText",
+      "key": "dbmsm",
+      "textKey": "DBMSMText"
+    },
+    {
+      "name": "DBInstanceText",
+      "key": "dbInstance",
+      "textKey": "DBInstanceText"
+    }
+  ]
+}
