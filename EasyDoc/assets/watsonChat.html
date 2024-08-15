@@ -1,25 +1,106 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        #muteButton {
+            position: fixed;
+            top: 5px;
+            right: 10px;
+            z-index: 2147483647;//make sure the button at top layer
+            border: none !important;
+            background: none;
+        }
+        button {
+            border:none;
+        }
+    </style>
   </head>
   <body>
+  <button id="muteButton" onclick="muteControl()">
+    <img id="buttonIcon" src="mute_on.png" width="30" alt="mute">
+  </button>
     <script>
+      //chatbot setting
       window.watsonAssistantChatOptions = {
-        // A UUID like '1d7e34d5-3952-4b86-90eb-7c7232b9b540' included in the embed code.
         integrationID: "72a46298-fc0d-43c0-a112-d1bfa38d4dbb",
-        // Your assistants region e.g. 'us-south', 'us-east', 'jp-tok' 'au-syd', 'eu-gb', 'eu-de', etc.
         region: "eu-gb",
-        // A UUID like '6435434b-b3e1-4f70-8eff-7149d43d938b' included in the embed code.
         serviceInstanceID: "4e2cc423-8ef5-4809-b407-f16590e88ebd",
-        // The callback function that is called after the widget instance has been created.
         onLoad: function(instance) {
           instance.render();
+          instance.on({ type: 'receive', handler: handleMessageReceive });
         },
         showLauncher: false, // Hide the web chat launcher, you will open the WebView from your mobile application
         openChatByDefault: true, // When the web chat WebView is opened, the web chat will already be open and ready to go.
         hideCloseButton: true // And the web chat will not show a close button, instead relying on the controls to close the WebView
       };
-      setTimeout(function(){const t=document.createElement('script');t.src="https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";document.head.appendChild(t);});
+
+      let currentAudio = null;
+      let flagMute = true;
+
+      //get response of chatbot
+      function generateTextFromMessage(message) {
+        return message.output.generic.map(message => message.text).join(' ');
+      }
+      //get audio from tts service
+      function speakText(text) {
+        const chineseCharPattern = /[\u4e00-\u9fff]/;//Detecting is there chinese in the response
+        if(chineseCharPattern.test(text)) {//use Baidu api
+          const token = "24.60e7ce7780c473b5d94202746e172b79.2592000.1725978569.282335-105424984";
+          fetch("https://tsn.baidu.com/text2audio?tex=" + text + "&lan=zh&cuid=120934871092384710&ctp=1&tok=" + token, {
+            method: "GET",
+          })
+          .then(response => response.blob())
+          .then(response => {
+            if (currentAudio) {
+              currentAudio.pause(); // stop current audio if it is playing
+            }
+            const audioUrl = URL.createObjectURL(response);
+            currentAudio = new Audio(audioUrl);
+            currentAudio.play();
+          })
+        }
+        else {//use IBM api
+          const apiKey = "bD64TXZXdKLWQ1gJ6qZjJT96JnCvZZi6pDOTeoygasA9";
+          const url = "https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/instances/728eb365-d9b9-46a4-95e5-1d107fa503fa";
+          const voice = "en-GB_KateV3Voice";
+          fetch(url + "/v1/synthesize?accept=audio/mp3&text=" + text + "&voice=" + voice, {
+            method: "GET",
+            headers: {
+              "Authorization": "Basic " + btoa("apikey:" + apiKey)//Authentication using apikey
+            }
+          })
+          .then(response => response.blob())
+          .then(response => {
+            if (currentAudio) {
+              currentAudio.pause(); // stop current audio if it is playing
+            }
+            const audioUrl = URL.createObjectURL(response);
+            currentAudio = new Audio(audioUrl);
+            currentAudio.play();
+          })
+        }
+      }
+      //play audio
+      function handleMessageReceive(event) {
+        const synthText = generateTextFromMessage(event.data);
+        if(!flagMute){
+          speakText(synthText);
+        }
+      }
+      //button control
+      function muteControl() {
+        flagMute = !flagMute;
+        const img = document.getElementById("buttonIcon");
+        if(!flagMute){
+          img.src = "mute_off.png";
+        }
+        else{
+          img.src = "mute_on.png";
+        }
+      }
+      setTimeout(function() {
+        setTimeout(function(){const t=document.createElement('script');t.src="https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";document.head.appendChild(t);});
+      });
     </script>
   </body>
 </html>
