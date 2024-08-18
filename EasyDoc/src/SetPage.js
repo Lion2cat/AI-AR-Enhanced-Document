@@ -17,7 +17,6 @@ const SetPage = () => {
 
   const [languageOpen, setLanguageOpen] = useState(false);
   const [themeOpen, setThemeOpen] = useState(false);
-  const [privacyOpen, setPrivacyOpen] = useState(false);
 
   const [languageItems, setLanguageItems] = useState([
     { label: 'English', value: 'en' },
@@ -28,11 +27,6 @@ const SetPage = () => {
   const [themeItems, setThemeItems] = useState([
     { label: i18n.t('theme_light'), value: 'light' },
     { label: i18n.t('theme_dark'), value: 'dark' },
-  ]);
-
-  const [privacyItems, setPrivacyItems] = useState([
-    { label: i18n.t('agree'), value: 'agree' },
-    { label: i18n.t('disagree'), value: 'disagree' },
   ]);
 
   const changeLanguage = async (lang) => {
@@ -48,6 +42,8 @@ const SetPage = () => {
       toggleTheme();
     }
     setSelectedTheme(theme);
+
+    AsyncStorage.setItem('selectedTheme', theme);
   };
 
   const changePrivacyAgreement = async (agreement) => {
@@ -82,10 +78,6 @@ const SetPage = () => {
       { label: i18n.t('theme_light'), value: 'light' },
       { label: i18n.t('theme_dark'), value: 'dark' },
     ]);
-    setPrivacyItems([
-      { label: i18n.t('agree'), value: 'agree' },
-      { label: i18n.t('disagree'), value: 'disagree' },
-    ]);
   }, [selectedLanguage]);
 
   return (
@@ -96,6 +88,7 @@ const SetPage = () => {
         <Text style={isDarkTheme ? styles.darkThemeText : styles.lightThemeText}>{i18n.t('theme')}</Text>
         <View style={styles.dropdownWrapper}>
           <DropDownPicker
+            testID="themePicker"
             open={themeOpen}
             value={selectedTheme}
             items={themeItems}
@@ -118,6 +111,7 @@ const SetPage = () => {
         <Text style={isDarkTheme ? styles.darkThemeText : styles.lightThemeText}>{i18n.t('language')}</Text>
         <View style={styles.dropdownWrapper}>
           <DropDownPicker
+            testID="language-picker"
             open={languageOpen}
             value={selectedLanguage}
             items={languageItems}
@@ -137,7 +131,7 @@ const SetPage = () => {
       </View>
 
       <View style={styles.privacyLinkContainer}>
-        <TouchableOpacity onPress={() => setPrivacyModalVisible(true)}>
+        <TouchableOpacity testID="privacy-agreement-button" onPress={() => setPrivacyModalVisible(true)}>
           <Text style={styles.privacyLink}>{i18n.t('privacy_agreement')}</Text>
         </TouchableOpacity>
       </View>
@@ -159,10 +153,10 @@ const SetPage = () => {
               </Text>
             </ScrollView>
             <View style={styles.modalButtonContainer}>
-              <TouchableOpacity style={styles.modalButton} onPress={() => changePrivacyAgreement('disagree')}>
+              <TouchableOpacity testID="privacy-disagree-button" style={styles.modalButton} onPress={() => changePrivacyAgreement('disagree')}>
                 <Text style={styles.buttonText}>{i18n.t('disagree')}</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.modalButton} onPress={() => changePrivacyAgreement('agree')}>
+              <TouchableOpacity testID="privacy-agree-button" style={styles.modalButton} onPress={() => changePrivacyAgreement('agree')}>
                 <Text style={styles.buttonText}>{i18n.t('agree')}</Text>
               </TouchableOpacity>
             </View>

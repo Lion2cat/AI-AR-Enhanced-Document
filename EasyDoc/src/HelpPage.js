@@ -41,7 +41,7 @@ const HelpPage = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      <ScrollView ref={scrollViewRef} contentContainerStyle={themeContainerStyle}>
+      <ScrollView ref={scrollViewRef} contentContainerStyle={themeContainerStyle} testID="scrollView">
         <View style={styles.section1}>
           <Text style={[styles.title, themeTextStyle]}>{i18n.t('Welcome to EasyDoc!')}</Text>
           <Image
