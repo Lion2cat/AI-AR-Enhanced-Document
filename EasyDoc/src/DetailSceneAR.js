@@ -5,7 +5,7 @@ import i18n from '../locales/i18n';
 
 const DetailSceneAR = (props) => {
   const { sceneNavigator, objectId, setShowInfo, setTextToRead } = props;
-  const [activeObject, setActiveObject] = useState(null); // 管理当前被点击的对象
+  const [activeObject, setActiveObject] = useState(null);
 
   const handleBack = () => {
     setShowInfo(false);
@@ -65,7 +65,6 @@ const DetailSceneAR = (props) => {
       {
         id: "AppGM",
         scale: [0.02, 0.07, 0.03],
-        // [左右, 上下，前后]
         position: [0, 0.005, -0.14],
         rotation: [0, -90, 90],
         source: require('../assets/2D_model/cube01.obj'),

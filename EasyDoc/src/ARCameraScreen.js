@@ -8,10 +8,10 @@ import HelloWorldSceneAR from "./HelloWorldSceneAR";
 import i18n from "../locales/i18n";
 
 const ARCameraScreen = () => {
-  const [showInfo, setShowInfo] = useState(false); // 状态变量控制说明文本的显示
-  const [isSpeaking, setIsSpeaking] = useState(false); // 状态变量控制语音播放状态
-  const [selectedVoice, setSelectedVoice] = useState(null); // 状态变量控制选择的语音
-  const [textToRead, setTextToRead] = useState("placeholder"); // 添加状态变量
+  const [showInfo, setShowInfo] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [selectedVoice, setSelectedVoice] = useState(null);
+  const [textToRead, setTextToRead] = useState("placeholder");
 
   useEffect(() => {
     const loadVoices = async () => {

@@ -9,7 +9,7 @@ const WebViewComponent = () => {
         originWhitelist={['*']}
         source={require('../assets/watsonChat.html')}
         style={styles.webview}
-        testID="webview" //测试相关
+        testID="webview"
       />
     </View>
   );

@@ -48,7 +48,7 @@ const WebViewComponent = () => {
 
     loadVoices();
 
-    // 当组件卸载时恢复全局语言设置
+
     return () => {
       setLocale(globalLanguage);
     };
