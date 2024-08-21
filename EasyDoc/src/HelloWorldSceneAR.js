@@ -44,8 +44,8 @@ const HelloWorldSceneAR = (props) => {
           scale= {[0.02, 0.05, 0.02]}
           position={[0, 0.0, -0.17]}
           rotation={[0, 0, 90]}
-          source={require('../assets/2D_model/cube01.obj')}
-          resources={[require('../assets/2D_model/cube01.mtl')]}
+          source={require('../assets/2D_model/models/cube01.obj')}
+          resources={[require('../assets/2D_model/materials/cube01.mtl')]}
           type="OBJ"
           materials={"dbmsm"}
           onClick={() => onModelClick("DBMSM")}
@@ -55,8 +55,8 @@ const HelloWorldSceneAR = (props) => {
           scale={[0.02, 0.06, 0.05]}
           position={[0.1, 0, 0]}
           rotation={[0, 0, 90]}
-          source={require('../assets/2D_model/cube02.obj')}
-          resources={[require('../assets/2D_model/cube02.mtl')]}
+          source={require('../assets/2D_model/models/cube02.obj')}
+          resources={[require('../assets/2D_model/materials/cube02.mtl')]}
           type="OBJ"
           materials={"dbr"}
           onClick={() => onModelClick("DBInstance_n")}
@@ -65,8 +65,8 @@ const HelloWorldSceneAR = (props) => {
           scale={[0.02, 0.07, 0.02]}
           position={[0.1, 0.01, -0.02]}
           rotation={[0, 0, 90]}
-          source={require('../assets/2D_model/cube01.obj')}
-          resources={[require('../assets/2D_model/cube01.mtl')]}
+          source={require('../assets/2D_model/models/cube01.obj')}
+          resources={[require('../assets/2D_model/materials/cube01.mtl')]}
           type="OBJ"
           materials={"appgm"}
           onClick={() => onModelClick("AppGM")}
@@ -75,8 +75,8 @@ const HelloWorldSceneAR = (props) => {
           scale={[0.02, 0.07, 0.02]}
           position={[0.1, 0.01, 0.05]}
           rotation={[0, 0, 90]}
-          source={require('../assets/2D_model/cube01.obj')}
-          resources={[require('../assets/2D_model/cube01.mtl')]}
+          source={require('../assets/2D_model/models/cube01.obj')}
+          resources={[require('../assets/2D_model/materials/cube01.mtl')]}
           type="OBJ"
           materials={"dbgm"}
           onClick={() => onModelClick("DBGM")}
@@ -86,8 +86,8 @@ const HelloWorldSceneAR = (props) => {
           scale={[0.02, 0.06, 0.05]}
           position={[-0.1, 0, 0]}
           rotation={[0, 0, 90]}
-          source={require('../assets/2D_model/cube02.obj')}
-          resources={[require('../assets/2D_model/cube02.mtl')]}
+          source={require('../assets/2D_model/models/cube02.obj')}
+          resources={[require('../assets/2D_model/materials/cube02.mtl')]}
           type="OBJ"
           materials={"dbl"}
           onClick={() => onModelClick("DBInstance_1")}
@@ -96,8 +96,8 @@ const HelloWorldSceneAR = (props) => {
           scale={[0.02, 0.07, 0.03]}
           position={[-0.1, 0.01, -0.005]}
           rotation={[0, 0, 90]}
-          source={require('../assets/2D_model/cube01.obj')}
-          resources={[require('../assets/2D_model/cube01.mtl')]}
+          source={require('../assets/2D_model/models/cube01.obj')}
+          resources={[require('../assets/2D_model/materials/cube01.mtl')]}
           type="OBJ"
           materials={"appgml"}
           onClick={() => onModelClick("AppGM")}
@@ -106,8 +106,8 @@ const HelloWorldSceneAR = (props) => {
           scale={[0.02, 0.06, 0.025]}
           position={[-0.13, 0.02, -0.005]}
           rotation={[0, 0, 90]}
-          source={require('../assets/2D_model/cube04.obj')}
-          resources={[require('../assets/2D_model/cube04.mtl')]}
+          source={require('../assets/2D_model/models/cube04.obj')}
+          resources={[require('../assets/2D_model/materials/cube04.mtl')]}
           type="OBJ"
           materials={"heap"}
           onClick={() => onModelClick("Heap")}
@@ -116,8 +116,8 @@ const HelloWorldSceneAR = (props) => {
           scale={[0.02, 0.06, 0.025]}
           position={[-0.065, 0.02, -0.005]}
           rotation={[0, 0, 90]}
-          source={require('../assets/2D_model/cube04.obj')}
-          resources={[require('../assets/2D_model/cube04.mtl')]}
+          source={require('../assets/2D_model/models/cube04.obj')}
+          resources={[require('../assets/2D_model/materials/cube04.mtl')]}
           type="OBJ"
           materials={"heap"}
           onClick={() => onModelClick("Heap")}
@@ -126,8 +126,8 @@ const HelloWorldSceneAR = (props) => {
           scale={[0.03, 0.03, 0.035]}
           position={[-0.1, 0.01, 0.07]}
           rotation={[-90, 0, 90]}
-          source={require('../assets/2D_model/cube03.obj')}
-          resources={[require('../assets/2D_model/cube03.mtl')]}
+          source={require('../assets/2D_model/models/cube03.obj')}
+          resources={[require('../assets/2D_model/materials/cube03.mtl')]}
           type="OBJ"
           materials={"dbgml"}
           onClick={() => onModelClick("DBGM")}

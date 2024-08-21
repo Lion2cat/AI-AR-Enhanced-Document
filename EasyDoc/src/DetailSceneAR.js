@@ -47,8 +47,8 @@ const DetailSceneAR = (props) => {
         scale: [0.02, 0.05, 0.02],
         position: [0, 0.08, -0.17],
         rotation: [0, -90, 90],
-        source: require('../assets/2D_model/cube01.obj'),
-        resources: [require('../assets/2D_model/cube01.mtl')],
+        source: require('../assets/2D_model/models/cube01.obj'),
+        resources: [require('../assets/2D_model/materials/cube01.mtl')],
         material:"dbmsm",
       },
     ],
@@ -58,8 +58,8 @@ const DetailSceneAR = (props) => {
         scale: [0.02, 0.06, 0.05],
         position: [0, 0, -0.15],
         rotation: [0, -90, 90],
-        source: require('../assets/2D_model/cube02.obj'),
-        resources: [require('../assets/2D_model/cube02.mtl')],
+        source: require('../assets/2D_model/models/cube02.obj'),
+        resources: [require('../assets/2D_model/materials/cube02.mtl')],
         material: "dbl",
       },
       {
@@ -67,8 +67,8 @@ const DetailSceneAR = (props) => {
         scale: [0.02, 0.07, 0.03],
         position: [0, 0.005, -0.14],
         rotation: [0, -90, 90],
-        source: require('../assets/2D_model/cube01.obj'),
-        resources: [require('../assets/2D_model/cube01.mtl')],
+        source: require('../assets/2D_model/models/cube01.obj'),
+        resources: [require('../assets/2D_model/materials/cube01.mtl')],
         material: "appgml"
       },
       {
@@ -76,8 +76,8 @@ const DetailSceneAR = (props) => {
         scale: [0.02, 0.06, 0.025],
         position: [-0.03, 0, -0.13],
         rotation: [0, -90, 90],
-        source: require('../assets/2D_model/cube04.obj'),
-        resources: [require('../assets/2D_model/cube04.mtl')],
+        source: require('../assets/2D_model/models/cube04.obj'),
+        resources: [require('../assets/2D_model/materials/cube04.mtl')],
         material: "heap"
       },
       {
@@ -85,8 +85,8 @@ const DetailSceneAR = (props) => {
         scale: [0.02, 0.06, 0.025],
         position: [0.035, 0, -0.13],
         rotation: [0, -90, 90],
-        source: require('../assets/2D_model/cube04.obj'),
-        resources: [require('../assets/2D_model/cube04.mtl')],
+        source: require('../assets/2D_model/models/cube04.obj'),
+        resources: [require('../assets/2D_model/materials/cube04.mtl')],
         material: "heap"
       },
       {
@@ -94,8 +94,8 @@ const DetailSceneAR = (props) => {
         scale: [0.03, 0.03, 0.035],
         position: [0, -0.07, -0.14],
         rotation: [-90, -90, 90],
-        source: require('../assets/2D_model/cube03.obj'),
-        resources: [require('../assets/2D_model/cube03.mtl')],
+        source: require('../assets/2D_model/models/cube03.obj'),
+        resources: [require('../assets/2D_model/materials/cube03.mtl')],
         material: "dbgml",
       },
     ],

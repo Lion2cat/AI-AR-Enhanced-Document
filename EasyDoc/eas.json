@@ -1,0 +1,21 @@
+{
+    "build": {
+      "development": {
+        "distribution": "internal",
+        "android": {
+          "gradleCommand": ":app:assembleDebug"
+        }
+      },
+      "production": {
+        "android": {
+          "gradleCommand": ":app:assembleRelease"
+        }
+      },
+      "preview": {
+        "android": {
+          "buildType": "apk"
+        }
+      }
+    }
+  }
+  

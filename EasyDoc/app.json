@@ -34,6 +34,11 @@
       "expo-font",
       "@reactvision/react-viro",
       "expo-localization"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "642e1698-bd01-4df2-ae62-438262e286d1"
+      }
+    }
   }
 }
