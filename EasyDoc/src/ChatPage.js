@@ -7,7 +7,7 @@ const WebViewComponent = () => {
     <View style={styles.container}>
       <WebView
         originWhitelist={['*']}
-        source={require('../assets/watsonChat.html')}
+        source={{ uri: 'file:///android_asset/watsonChat.html' }}
         style={styles.webview}
         testID="webview"
       />
