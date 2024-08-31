@@ -12,7 +12,7 @@ const SetPage = () => {
   const { toggleTheme, isDarkTheme } = useThemeContext();
   const [selectedLanguage, setSelectedLanguage] = useState(i18n.locale);
   const [selectedTheme, setSelectedTheme] = useState(isDarkTheme ? 'dark' : 'light');
-  const [privacyAgreement, setPrivacyAgreement] = useState(null);
+  const [privacyAgreement, setPrivacyAgreement] = useState(false);
   const [privacyModalVisible, setPrivacyModalVisible] = useState(false);
 
   const [languageOpen, setLanguageOpen] = useState(false);

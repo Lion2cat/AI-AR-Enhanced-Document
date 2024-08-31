@@ -56,7 +56,7 @@ const HomePage = () => {
 
   const handleCameraPress = async () => {
     const privacyAgreement = await AsyncStorage.getItem(PRIVACY_KEY);
-    if (privacyAgreement === 'disagree') {
+    if (privacyAgreement !== 'agree') {
       setModalVisible(true);
     } else {
       navigation.navigate('Camera');

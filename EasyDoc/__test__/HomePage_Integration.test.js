@@ -1,149 +1,146 @@
 import React from 'react';
-import { render, fireEvent, waitFor } from '@testing-library/react-native';
-import HelpPage from '../src/HelpPage';
+import { render, fireEvent, waitFor, act } from '@testing-library/react-native';
+import HomePage from '../src/HomePage';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { useThemeContext } from '../components/ThemeContext';
 import i18n from '../locales/i18n';
-import { ScrollView } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Font from 'expo-font';
+
+jest.mock('react-native/Libraries/Image/Image', () => 'Image');
 
 jest.mock('../assets/camera.png', () => 1);
 
-jest.mock('../components/ThemeContext', () => ({
-  useThemeContext: jest.fn(),
-}));
+jest.mock('@react-navigation/native', () => {
+  const actualNav = jest.requireActual('@react-navigation/native');
+  const navigate = jest.fn();
+  return {
+    ...actualNav,
+    useNavigation: jest.fn(() => ({ navigate })),
+    useIsFocused: jest.fn(),
+  };
+});
+
+jest.mock('../components/ThemeContext', () => {
+  const actualThemeContext = jest.requireActual('../components/ThemeContext');
+  return {
+    ...actualThemeContext,
+    useThemeContext: jest.fn(),
+  };
+});
 
 jest.mock('../locales/i18n', () => ({
-  t: jest.fn((key) => key),
+  t: (key) => key,
   locale: 'en',
-  setLocale: jest.fn(),
 }));
 
-jest.spyOn(ScrollView.prototype, 'scrollTo').mockImplementation(() => {});
+jest.mock('@react-native-async-storage/async-storage', () => ({
+  getItem: jest.fn(),
+  setItem: jest.fn(),
+}));
 
-describe('HelpPage Integration Test', () => {
+jest.mock('expo-font', () => ({
+  loadAsync: jest.fn(),
+}));
+
+describe('HomePage Integration Test', () => {
+  let navigate;
+
   beforeEach(() => {
-    useThemeContext.mockReturnValue({
-      isDarkTheme: false,
-    });
-    i18n.t.mockImplementation((key) => key);
+    useIsFocused.mockReturnValue(true);
+    navigate = useNavigation().navigate;
+    navigate.mockClear();
+    AsyncStorage.getItem.mockClear();
+    AsyncStorage.setItem.mockClear();
+    Font.loadAsync.mockResolvedValue(true);
   });
 
-  // 测试 HelpPage 渲染和主题切换的集成
-  it('renders correctly and handles theme switching', async () => {
-    const { getByText, rerender } = render(<HelpPage />);
-
-    await waitFor(() => {
-      expect(getByText('Welcome to EasyDoc!')).toBeTruthy();
-      expect(getByText('What question')).toBeTruthy();
-    });
-
-    useThemeContext.mockReturnValue({
-      isDarkTheme: true,
-    });
-
-    rerender(<HelpPage />);
-
-    await waitFor(() => {
-      const title = getByText('Welcome to EasyDoc!');
-      expect(title.props.style).toContainEqual({ color: '#d0d0c0' });
-    });
-  });
-
-  // 测试国际化与组件的集成
-  it('handles language change and updates text accordingly', async () => {
-    i18n.t.mockImplementation((key) => `translated-${key}`);
-
-    const { getByText, rerender } = render(<HelpPage />);
-
-    await waitFor(() => {
-      expect(getByText('translated-Welcome to EasyDoc!')).toBeTruthy();
-      expect(getByText('translated-What question')).toBeTruthy();
-    });
-
-    i18n.t.mockImplementation((key) => `newLanguage-${key}`);
-    rerender(<HelpPage />);
-
-    await waitFor(() => {
-      expect(getByText('newLanguage-Welcome to EasyDoc!')).toBeTruthy();
-    });
-  });
-
-  // 测试组件间的滚动交互
-  it('handles scroll interaction between sections', async () => {
-    const { getByTestId } = render(<HelpPage />);
-
-    const aboutARButton = getByTestId('aboutARButton');
-    fireEvent.press(aboutARButton);
-
-    await waitFor(() => {
-      expect(ScrollView.prototype.scrollTo).toHaveBeenCalledWith({
-        y: 750,
-        animated: true,
-      });
-    });
-
-    const aboutChatButton = getByTestId('aboutChatButton');
-    fireEvent.press(aboutChatButton);
-
-    await waitFor(() => {
-      expect(ScrollView.prototype.scrollTo).toHaveBeenCalledWith({
-        y: 1900,
-        animated: true,
-      });
-    });
-
-    // 测试点击“About language/theme”按钮滚动到对应部分
-    const aboutLanguageButton = getByTestId('aboutLanguageButton');
-    fireEvent.press(aboutLanguageButton);
-
-    await waitFor(() => {
-      expect(ScrollView.prototype.scrollTo).toHaveBeenCalledWith({
-        y: 3050,
-        animated: true,
-      });
-    });
-
-    const scrollToTopButton = getByTestId('scrollToTopButton');
-    fireEvent.press(scrollToTopButton);
-
-    await waitFor(() => {
-      expect(ScrollView.prototype.scrollTo).toHaveBeenCalledWith({
-        y: 0,
-        animated: true,
-      });
-    });
-  });
-
-  // 综合测试所有交互
-  it('integrates all functionalities together', async () => {
-    const { getByTestId, getByText, rerender } = render(<HelpPage />);
-
-    await waitFor(() => {
-      expect(getByText('Welcome to EasyDoc!')).toBeTruthy();
-    });
-
+  it('applies correct styles based on dark theme', async () => {
     useThemeContext.mockReturnValue({ isDarkTheme: true });
-    rerender(<HelpPage />);
+
+    const { getByTestId } = render(<HomePage />);
 
     await waitFor(() => {
-      const title = getByText('Welcome to EasyDoc!');
-      expect(title.props.style).toContainEqual({ color: '#d0d0c0' });
+      const container = getByTestId('container');
+      expect(container.props.style).toContainEqual({ backgroundColor: '#242c40' });
     });
+  });
 
-    const aboutARButton = getByTestId('aboutARButton');
-    fireEvent.press(aboutARButton);
+  it('navigates to CameraPage on image press when privacy is agreed', async () => {
+    AsyncStorage.getItem.mockResolvedValue('agree');
+
+    const { getByLabelText } = render(<HomePage />);
 
     await waitFor(() => {
-      expect(ScrollView.prototype.scrollTo).toHaveBeenCalledWith({
-        y: 750,
-        animated: true,
-      });
+      const cameraButton = getByLabelText('CameraButton');
+      fireEvent.press(cameraButton);
     });
 
-    i18n.t.mockImplementation((key) => `newLanguage-${key}`);
-    rerender(<HelpPage />);
+    expect(navigate).toHaveBeenCalledWith('Camera');
+  });
+
+  it('shows privacy modal on image press when privacy is disagreed', async () => {
+    AsyncStorage.getItem.mockResolvedValue('disagree');
+
+    const { getByLabelText, getByText } = render(<HomePage />);
 
     await waitFor(() => {
-      expect(getByText('newLanguage-Welcome to EasyDoc!')).toBeTruthy();
+      const cameraButton = getByLabelText('CameraButton');
+      fireEvent.press(cameraButton);
     });
+
+    expect(getByText('cameraAgreementText')).toBeTruthy();
+  });
+
+  it('navigates to CameraPage after agreeing to privacy policy', async () => {
+    AsyncStorage.getItem.mockResolvedValue('disagree');
+    const { getByLabelText, getByText } = render(<HomePage />);
+
+    await waitFor(() => {
+      const cameraButton = getByLabelText('CameraButton');
+      fireEvent.press(cameraButton);
+    });
+
+    const agreeButton = getByText('agree');
+
+    await act(async () => {
+      fireEvent.press(agreeButton);
+    });
+
+    expect(AsyncStorage.setItem).toHaveBeenCalledWith('privacyAgreement', 'agree');
+    expect(navigate).toHaveBeenCalledWith('Camera');
+  });
+
+  it('navigates to Chat screen on chat button press', async () => {
+    const { getByLabelText } = render(<HomePage />);
+
+    await waitFor(() => {
+      const chatButton = getByLabelText('ChatButton');
+      fireEvent.press(chatButton);
+    });
+
+    expect(navigate).toHaveBeenCalledWith('Chat');
+  });
+
+  it('navigates to Help screen on help button press', async () => {
+    const { getByLabelText } = render(<HomePage />);
+
+    await waitFor(() => {
+      const helpButton = getByLabelText('HelpButton');
+      fireEvent.press(helpButton);
+    });
+
+    expect(navigate).toHaveBeenCalledWith('Help');
+  });
+
+  it('navigates to Settings screen on settings button press', async () => {
+    const { getByLabelText } = render(<HomePage />);
+
+    await waitFor(() => {
+      const settingsButton = getByLabelText('SettingsButton');
+      fireEvent.press(settingsButton);
+    });
+
+    expect(navigate).toHaveBeenCalledWith('Settings');
   });
 });

@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 20,
     textAlign: 'center',
-    marginVertical: 20,
+    marginVertical: 10,
     fontFamily: 'Outfit-SemiBold',
   },
   lightContainer: {
@@ -157,28 +157,28 @@ const styles = StyleSheet.create({
   },
   slide: {
     width: screenWidth,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
   contentContainer: {
-    width: '90%',
+    width: '85%',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FFFFF0',
-    padding: 20,
+    padding: 15,
     borderRadius: 10,
-    marginTop: 50,
+    marginTop: 30,
   },
   image: {
-    width: '100%',
+    width: '90%',
     aspectRatio: 1,
     height: undefined,
     resizeMode: 'contain',
-    marginVertical: 10,
+    marginVertical: 5,
   },
   paginationContainer: {
-    bottom: 170,
+    bottom: 140,
   },
   paginationDot: {
     width: 10,
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: 'absolute',
-    bottom: 100,
+    bottom: 70,
     left: 0,
     right: 0,
     flexDirection: 'row',
