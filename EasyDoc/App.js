@@ -41,7 +41,7 @@ const AppContent = () => {
 
     const checkOnboardingStatus = async () => {
       const onboarded = await AsyncStorage.getItem('hasOnboarded');
-      setHasOnboarded(onboarded !== 'true');// ===
+      setHasOnboarded(onboarded === 'true');// ===
     };
 
     const unsubscribe = addLocaleChangeListener(handleLocaleChange);
